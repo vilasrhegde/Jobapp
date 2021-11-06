@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins',sans-serif;
+}
+body{
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  background:rgba(0,0,0,0.85);
+}
+
+.container{
+  max-width: 800px;
+  width: 100%;
+  background-color: #fff;
+  padding: 25px 30px;
+  border-radius: 5px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+}
+a{
+  position: absolute;
+  color: #fff;
+  text-align: center;
+  background: rgba(0,0,0,0.5);backdrop-filter: blur(5px);
+  right:0;
+  text-decoration: none;
+  letter-spacing: 3px;
+  font-size: 20px;
+  width: fit-content;
+  border-radius: 10px;
+}
+
+.container .title{
+  font-size: 25px;
+  font-weight: 600;
+  position: relative;
+}
+
+.form-row {
+    display: flex;
+    justify-content: flex-end;
+    padding: .5em;
+  }
+  .form-row > label {
+    padding: .5em 1em .5em 0;
+    flex: 1;
+	margin-bottom: 5px;
+  
+  margin-left: 10px;
+ 
+  }
+  .form-row > input {
+    flex: 2;
+  }
+  .form-row > input,
+  .form-row > button {
+    padding: .5em;
+  }
+  
+  .form-row > label{
+  display: block;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+
+.button{
+	font-size: 16px;
+	padding: 8px; 
+	width:10%;
+  border-radius: 5px;
+}
+
+  .textarea{
+    width: 100%;
+    resize: auto;
+}
+
+
+@media(max-width:900px){
+  body{
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    background: #222;
+    overflow: scroll;
+    
+  }
+  .container{
+    max-width: 900px;
+    width: 100%;
+    background-color: #fff;
+    padding: 30px 5px;
+    border-radius: 0;
+    box-shadow: 0 0 15px 5px rgba(0,0,0,0.5);
+    text-align: center;
+  }
+  a{
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    text-decoration: none;
+    text-align: left;
+    background: #222;
+    color: white;
+    padding: 3px 10px;
+  }
+
+  .form-row {
+    display: flex;
+    justify-content: flex-end;
+    padding: .5em;
+  }
+  .form-row > label {
+  display: none;
+  }
+  hr{
+    margin-bottom: 20px;
+  }
+
+  .form-row > input {
+    flex: 2;
+  }
+  .form-row > input,
+  .form-row > button {
+    padding: .8em;
+  }
+  .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    width: 100%;
+    padding: 10px;
+    color: #fff;
+    margin-top: 50px;
+
+  }
+  
+  .button{
+    font-size: 16px;
+    padding: 8px; 
+    width:30%;
+    background: #222;
+    color: #fff;
+    border-radius: 5px;
+  }
+  
+    .textarea {
+    
+    padding: 10px; 
+    width: 100%;
+    resize: auto;
+   
+  }
+}
