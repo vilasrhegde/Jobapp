@@ -9,29 +9,35 @@ $lastname= "";
 $email= "";
 $linkedin= "";
 $position="";
-$startdate="";
+$branch="";
 $mobile="";
-$cityname="";
+$dob="";
 $lastcompany="";
-$comments="";
+$xp="";
+$skill="";
+$relocate="";
+$vision="";
 
 
-$res = mysqli_query($link, "select * from submissions where id=$id");
+
+$res = mysqli_query($link, "SELECT s.fname,s.lname,s.email,s.linkedin,s.position,s.branch,s.relocate,a.dob,b.lwc,b.xp,b.skill,
+l.mobile,v.vision from submissions s,applicant a,`locate` l,background b,visions v WHERE `id`=$id") or mysqli_error($link) ; 
 
 while($row=mysqli_fetch_array($res))
 {
-    $firstname=$row["first_name"];
-    $lastname=$row["last_name"];
+    $firstname=$row["fname"];
+    $lastname=$row["lname"];
     $email=$row["email"];
     $linkedin= $row["linkedin"];
     $position=$row["position"];
-    $startdate=$row["start_date"];
+    $branch=$row["branch"];
     $mobile=$row["mobile"];
-    $cityname=$row["city_name"];
-    $lastcompany=$row["last_company"];
-    $comments=$row["comments"];
-
-
+    $dob=$row["dob"];
+    $lastcompany=$row["lwc"];
+    $xp=$row["xp"];
+    $skill=$row["skill"];
+    $relocate=$row["relocate"];
+    $vision=$row["vision"];
 }
 
 ?>

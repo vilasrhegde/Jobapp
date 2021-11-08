@@ -3,22 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/webp" sizes="32x32"  href="J.png">  
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Thank you!</title>
 </head>
 <body style="background: #fff;display: flex;justify-content: center;align-items: center;padding: 20% 3%;">
     <section>
+        <a href="index.html" id="home">Home</a>   
         <center>
+               
+
+        
             <h1>You have Registered Successfully!</h1>
             <br>
             <h3 style="font-weight: 500;">We will be in touch with you from now on. Stay tuned.</h3>
+            <br>
+            <a id="status" href="appview.php">Status</a>
             <br>
             <br>
           
 
         </center>
     </section>
-    <a href="index.html">Home</a>
+<style>
+    #home{
+        position: absolute;top: 50%;width: 100%;transform: translateY(50%);padding: 30px;border-radius: 0;background: #222;
+        font-size: 30px;font-weight: 900;text-shadow: 0 7 px 5px rgba(0, 0, 0, 0.308);letter-spacing: 30px;
+        transition: .5s;
+    }
+    #home:hover{
+        letter-spacing: 2px;
+    }
+    #status{
+   position: relative;
+   background-color: #222;
+   padding: 5px 30px
+    }
+    
+</style>
 </body>
 </html>

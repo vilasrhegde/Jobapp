@@ -26,6 +26,30 @@ $curr_date= date("Y-m-d H:i:s"); // time in India
 <body>
 
 
+<style>
+  @media(max-width:900px){
+  tr{
+    display: flex;
+    flex-direction: column;
+    
+  }
+  td{
+    display: flex;
+    flex-direction: column;
+
+  }
+  th{
+
+    display: none;
+    font-size: 10px;
+  }
+  td button{
+    width: 100%;
+  }
+  
+
+}
+</style>
 <div class="topnav" id="topnav" >
 
 <div class="dropdown">
@@ -33,15 +57,19 @@ $curr_date= date("Y-m-d H:i:s"); // time in India
     <span class="caret"></span></button>
     <ul class="dropdown-menu">
       <li class="dropdown-header" aria-disabled="">Database tables</li>
-      <li><a href="#">Applicant</a></li>
-      <li><a href="#">Background</a></li>
-      <li><a href="#">Locate</a></li>
-      <li><a href="#">Vision</a></li>
+
+      <li><a href="./tables/applicant.php">Applicant</a></li>
+      <li><a href="./tables/background.php">Background</a></li>
+      <li><a href="./tables/locate.php">Locate</a></li>
+      <li><a href="./tables/visions.php">Vision</a></li>
       <li class="divider"></li>
       <li class="dropdown-header">Complete log</li>
       <li><a href="#">View all</a></li>
     </ul>
-  </div>
+</div>
+
+
+
   <div class="tab">
   <a class="active"  href="index.html">Home</a>
   <a href="#table"><span>Table</span></a>
@@ -153,17 +181,20 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
     $lwc = mysqli_query($link, "SELECT * from background where skill like '%$_POST[value]%'");
 
     
-  echo "<table class='table' border='5'>
-<tr>
-<th>First name</th>
-<th>Last name</th>
-<th>Email</th>
-<th>LinkedIn</th>
-<th>Position</th>
-<th>Branch</th>
-<th>Edit</th>
-<th>Delete</th>
-</tr>";
+    echo "<center>";
+    echo "<table class='table' border='5'>
+
+  <tr>
+  <th>First name</th>
+  <th>Last name</th>
+  <th>Email</th>
+  <th>LinkedIn</th>
+  <th>Position</th>
+  <th>Branch</th>
+  <th>Edit</th>
+  <th>Delete</th>
+  </tr>";
+  echo "</center>";
 
 
     while($row=mysqli_fetch_array($res))
@@ -190,7 +221,6 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
         echo "<td>"; echo $row["email"]; echo "</td>";
         echo "<td>"; echo $row["linkedin"]; echo "</td>";
         echo "<td>"; echo $row["position"]; echo "</td>";
-        echo "<td>"; echo $row["bdate"]; echo "</td>";
         echo "<td>"; echo $row["branch"]; echo "</td>";
     
         echo "<td>"; ?><a href="edit.php?id=<?php echo $row["id"]; ?>"><button type="text/javascript" class="btn btn-success">Edit</button></a> <?php echo "</td>";
@@ -207,7 +237,6 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
         echo "<td>"; echo $row["email"]; echo "</td>";
         echo "<td>"; echo $row["linkedin"]; echo "</td>";
         echo "<td>"; echo $row["position"]; echo "</td>";
-        echo "<td>"; echo $row["bdate"]; echo "</td>";
         echo "<td>"; echo $row["branch"]; echo "</td>";
     
         echo "<td>"; ?><a href="edit.php?id=<?php echo $row["id"]; ?>"><button type="text/javascript" class="btn btn-success">Edit</button></a> <?php echo "</td>";
@@ -224,7 +253,6 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
         echo "<td>"; echo $row["email"]; echo "</td>";
         echo "<td>"; echo $row["linkedin"]; echo "</td>";
         echo "<td>"; echo $row["position"]; echo "</td>";
-        echo "<td>"; echo $row["bdate"]; echo "</td>";
         echo "<td>"; echo $row["branch"]; echo "</td>";
     
         echo "<td>"; ?><a href="edit.php?id=<?php echo $row["id"]; ?>"><button type="text/javascript" class="btn btn-success">Edit</button></a> <?php echo "</td>";
@@ -236,37 +264,30 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
     while($row=mysqli_fetch_array($city))
     {
         echo "<tr>";
-        echo "<td>"; echo $row["first_name"]; echo "</td>";
-        echo "<td>"; echo $row["last_name"]; echo "</td>";
+        echo "<td>"; echo $row["fname"]; echo "</td>";
+        echo "<td>"; echo $row["lname"]; echo "</td>";
         echo "<td>"; echo $row["email"]; echo "</td>";
         echo "<td>"; echo $row["linkedin"]; echo "</td>";
         echo "<td>"; echo $row["position"]; echo "</td>";
-        echo "<td>"; echo $row["start_date"]; echo "</td>";
-        echo "<td>"; echo $row["mobile"]; echo "</td>";
-        echo "<td>"; echo $row["city_name"]; echo "</td>";
-        echo "<td>"; echo $row["last_company"]; echo "</td>";
-        echo "<td>"; echo $row["comments"]; echo "</td>";
+        echo "<td>"; echo $row["branch"]; echo "</td>";
+
     
-        echo "<td>"; ?><a href="view.php?id=<?php echo $row["id"]; ?>"><button type="text/javascript" class="btn btn-success">Edit</button></a> <?php echo "</td>";
+        echo "<td>"; ?><a href="edit.php?id=<?php echo $row["id"]; ?>"><button type="text/javascript" class="btn btn-success">Edit</button></a> <?php echo "</td>";
         echo "<td>"; ?><a href="delete.php?id=<?php echo $row["id"]; ?>"><button type="text/javascript" class="btn btn-danger">Delete</button></a> <?php echo "</td>";
     
         echo "</tr>";
         $count= $count+1;
     }
     
-    while($row=mysqli_fetch_array($comp))
+    while($row=mysqli_fetch_array($lwc))
     {
         echo "<tr>";
-        echo "<td>"; echo $row["first_name"]; echo "</td>";
-        echo "<td>"; echo $row["last_name"]; echo "</td>";
+        echo "<td>"; echo $row["fname"]; echo "</td>";
+        echo "<td>"; echo $row["lname"]; echo "</td>";
         echo "<td>"; echo $row["email"]; echo "</td>";
         echo "<td>"; echo $row["linkedin"]; echo "</td>";
         echo "<td>"; echo $row["position"]; echo "</td>";
-        echo "<td>"; echo $row["start_date"]; echo "</td>";
-        echo "<td>"; echo $row["mobile"]; echo "</td>";
-        echo "<td>"; echo $row["city_name"]; echo "</td>";
-        echo "<td>"; echo $row["last_company"]; echo "</td>";
-        echo "<td>"; echo $row["comments"]; echo "</td>";
+        echo "<td>"; echo $row["branch"]; echo "</td>";
     
         echo "<td>"; ?><a href="edit.php?id=<?php echo $row["id"]; ?>"><button type="text/javascript" class="btn btn-success">Edit</button></a> <?php echo "</td>";
         echo "<td>"; ?><a href="delete.php?id=<?php echo $row["id"]; ?>"><button type="text/javascript" class="btn btn-danger">Delete</button></a> <?php echo "</td>";
@@ -324,19 +345,20 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
 
   $date = mysqli_query($link, "SELECT * from submissions WHERE `date` BETWEEN  '$_POST[from]' AND '$_POST[to]'  ");
 
-      echo "<table class='table' border='5'>
-    <tr>
-    <th>First name</th>
-    <th>Last name</th>
-    <th>Email</th>
-    <th>LinkedIn</th>
-    <th>Position</th>
-    <th>Branch</th>
-    <th>Date</th>
-    <th>Edit</th>
-    <th>Delete</th>
-    
-    </tr>";
+  echo "<center>";
+  echo "<table class='table' border='5'>
+
+<tr>
+<th>First name</th>
+<th>Last name</th>
+<th>Email</th>
+<th>LinkedIn</th>
+<th>Position</th>
+<th>Branch</th>
+<th>Edit</th>
+<th>Delete</th>
+</tr>";
+echo "</center>";
     
 
 while($row=mysqli_fetch_array($date))
@@ -372,35 +394,31 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
 
   $oth = mysqli_query($link, "SELECT * from submissions WHERE position not like 'developer' 
   and position not like 'tester' and position not like 'hr' ");
-
+echo "<center>";
       echo "<table class='table' border='5'>
+
     <tr>
     <th>First name</th>
     <th>Last name</th>
     <th>Email</th>
     <th>LinkedIn</th>
     <th>Position</th>
-    <th>Start date</th>
-    <th>Mobile</th>
-    <th>City name</th>
-    <th>Last company</th>
-    <th>Comments</th>
+    <th>Branch</th>
+    <th>Edit</th>
+    <th>Delete</th>
     </tr>";
-    
+    echo "</center>";
 
 while($row=mysqli_fetch_array($oth))
 {
     echo "<tr>";
-    echo "<td>"; echo $row["first_name"]; echo "</td>";
-    echo "<td>"; echo $row["last_name"]; echo "</td>";
+    echo "<td>"; echo $row["fname"]; echo "</td>";
+    echo "<td>"; echo $row["lname"]; echo "</td>";
     echo "<td>"; echo $row["email"]; echo "</td>";
     echo "<td>"; echo $row["linkedin"]; echo "</td>";
     echo "<td>"; echo $row["position"]; echo "</td>";
-    echo "<td>"; echo $row["start_date"]; echo "</td>";
-    echo "<td>"; echo $row["mobile"]; echo "</td>";
-    echo "<td>"; echo $row["city_name"]; echo "</td>";
-    echo "<td>"; echo $row["last_company"]; echo "</td>";
-    echo "<td>"; echo $row["comments"]; echo "</td>";
+    echo "<td>"; echo $row["branch"]; echo "</td>";
+
 
     echo "<td>"; ?><a href="edit.php?id=<?php echo $row["id"]; ?>"><button type="text/javascript" class="btn btn-success">Edit</button></a> <?php echo "</td>";
     echo "<td>"; ?><a href="delete.php?id=<?php echo $row["id"]; ?>"><button type="text/javascript" class="btn btn-danger">Delete</button></a> <?php echo "</td>";
@@ -428,35 +446,30 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
     
 
 
-  
-  echo "<table class='table' border='5'>
-<tr>
-<th>First name</th>
-<th>Last name</th>
-<th>Email</th>
-<th>LinkedIn</th>
-<th>Position</th>
-<th>Start date</th>
-<th>Mobile</th>
-<th>City name</th>
-<th>Last company</th>
-<th>Comments</th>
-</tr>";
+    echo "<center>";
+    echo "<table class='table' border='5'>
 
+  <tr>
+  <th>First name</th>
+  <th>Last name</th>
+  <th>Email</th>
+  <th>LinkedIn</th>
+  <th>Position</th>
+  <th>Branch</th>
+  <th>Edit</th>
+  <th>Delete</th>
+  </tr>";
+  echo "</center>";
 
     while($row=mysqli_fetch_array($pos))
     {
         echo "<tr>";
-        echo "<td>"; echo $row["first_name"]; echo "</td>";
-        echo "<td>"; echo $row["last_name"]; echo "</td>";
+        echo "<td>"; echo $row["fname"]; echo "</td>";
+        echo "<td>"; echo $row["lname"]; echo "</td>";
         echo "<td>"; echo $row["email"]; echo "</td>";
         echo "<td>"; echo $row["linkedin"]; echo "</td>";
         echo "<td>"; echo $row["position"]; echo "</td>";
-        echo "<td>"; echo $row["start_date"]; echo "</td>";
-        echo "<td>"; echo $row["mobile"]; echo "</td>";
-        echo "<td>"; echo $row["city_name"]; echo "</td>";
-        echo "<td>"; echo $row["last_company"]; echo "</td>";
-        echo "<td>"; echo $row["comments"]; echo "</td>";
+        echo "<td>"; echo $row["branch"]; echo "</td>";
     
         echo "<td>"; ?><a href="edit.php?id=<?php echo $row["id"]; ?>"><button type="text/javascript" class="btn btn-success">Edit</button></a> <?php echo "</td>";
         echo "<td>"; ?><a href="delete.php?id=<?php echo $row["id"]; ?>"><button type="text/javascript" class="btn btn-danger">Delete</button></a> <?php echo "</td>";
@@ -475,8 +488,110 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
 </div>
 <br><br>
 
+<div class="col-sm-12" >
+  
+<?php
 
-<div  class="container w-100 p-3 collapse" id="inp" style="display: flex; flex-direction:column; align-items:space-around;justify-content:center;" >
+
+$link = mysqli_connect("localhost", "root" , "") or die (mysqli_error($link));
+mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
+$countdev=0;
+$counthr=0;
+$counttst=0;
+
+//     $tdev= mysqli_query($link,"SELECT * FROM submissions WHERE position='developer' ");
+//     $ttst= mysqli_query($link,"SELECT * FROM submissions WHERE position='tester' ");
+//     $thr= mysqli_query($link,"SELECT * FROM submissions WHERE position='hr' ");
+
+//     // $devs=mysqli_fetch_array($tdev);
+//     // $tsts=mysqli_fetch_array($ttst);
+//     // $hrs=mysqli_fetch_array($thr);
+
+//     $dv = mysqli_fetch_array($tdev);
+// echo $dv;
+
+if(isset($_POST['setmax'])){
+$mxdev=$_POST['dev'];
+$mxhr=$_POST['hr'];
+$mxtester=$_POST['test'];
+}
+
+// echo $devs['count(*)'];
+// echo $tsts;
+// echo $hrs;
+
+$query1 = "SELECT `id`  FROM `submissions` where position='developer' ";
+$query2 = "SELECT `id`  FROM `submissions` where position='tester' ";
+$query3 = "SELECT `id`  FROM `submissions` where position='hr' ";
+    
+// Execute the query and store the result set
+$resultdev = mysqli_query($link, $query1);
+$resulttest = mysqli_query($link, $query2);
+$resulthr = mysqli_query($link, $query3);
+
+if ($query1)
+{
+  // it return number of rows in the table.
+  $rowd = mysqli_num_rows($resultdev);
+    
+     if ($rowd)
+        {
+           printf("Number of Developers : " . $rowd);
+           echo "<br>";
+        }
+  // close the result.
+  mysqli_free_result($resultdev);
+
+
+
+}
+if($query2){
+$rowt = mysqli_num_rows($resulttest);
+if($rowt){
+  printf("Number of Testers : " . $rowt);
+  echo "<br>";
+}
+mysqli_free_result($resulttest);
+}
+if($query3){
+$rowh = mysqli_num_rows($resulthr);
+if($rowh){
+  printf("Number of Human Resources : " . $rowh);
+  echo "<br>";
+}
+mysqli_free_result($resulthr);
+}
+
+?>  
+<form class="form-row " method="post" action="">
+
+    <div class="form-group">  
+  <h2>Set required Spots</h2>
+
+      <label class="col-sm-12 control-label">For Developer</label>
+      <div class="col-sm-12">   
+        <input class="form-control center" id="dev" type="number" value="" name="dev" placeholder="Developers" >
+      </div>
+
+    <div class="form-group">  
+      <label class="col-sm-12 control-label">For Human Resources</label>
+      <div class="col-sm-12">   
+        <input class="form-control" id="hr" type="number" value="" name="hr" placeholder="Human Resources" >
+      </div>
+
+    <div class="form-group">  
+      <label class="col-sm-12 control-label">For Testers</label>
+      <div class="col-sm-12">   
+        <input class="form-control" id="test" type="number" value="" name="test" placeholder="Testers" >
+        <br><br>
+      </div>
+    </div>
+    <input type="submit" name="setmax" style="width: 100%;background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);" class="btn btn-primary btn-lg btn-block"   />
+</form>
+</div>
+
+
+<div  class="container col-lg-12"  >
   <h2>Enter Basic details</h2>
 
   <form class="form-row " method="post" action="">
@@ -484,7 +599,7 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
     <div class="form-group">  
       <label class="col-sm-12 control-label">First Name</label>
       <div class="col-sm-12">   
-        <input class="form-control" id="firstname" type="text" value="" name="fname" placeholder="First name" required>
+        <input class="form-control" id="firstname" type="text" value="" name="fname" placeholder="First name" >
       </div>
     </div>
     
@@ -492,51 +607,44 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
     <div class="form-group">
       <label class="col-sm-2 control-label" for="lastname">Last name</label>
       <div class="col-sm-12">
-        <input type="text" class="form-control" id="lastname" type="text" name="lname" placeholder="Last name" required>
-      </div>
-    </div>
+        <input type="text" class="form-control" id="lastname" type="text" name="lname" placeholder="Last name" >
+      </div></div>
     <div class="form-group has-success has-feedback">
       <label class="col-sm-12 control-label" for="email">Email</label>
       <div class="col-sm-12">
-        <input type="text" class="form-control" name="email" id="email" placeholder="Email" required>
-      </div>
-    </div>
+        <input type="text" class="form-control" name="email" id="email" placeholder="Email" >
+      </div></div>
     <div class="form-group has-success has-feedback">
       <label class="col-sm-2 control-label" for="linkedin">LinkedIn</label>
       <div class="col-sm-12">
-        <input type="url" class="form-control" name="linkedin" id="linkedin" placeholder="LinkedIn" required>
-      </div>
-    </div>
+        <input type="url" class="form-control" name="linkedin" id="linkedin" placeholder="LinkedIn" >
+      </div></div>
     <div class="form-group has-success has-feedback">
       <label class="col-sm-2 control-label" for="dob">Date of Birth</label>
       <div class="col-sm-12">
-        <input type="date" class="form-control" name="dob" id="dob" placeholder="Date of birth" required>
-      </div>
-    </div>
+        <input type="date" class="form-control" name="dob" id="dob" placeholder="Date of birth" >
+      </div></div>
     <div class="form-group has-success has-feedback">
       <label class="col-sm-2 control-label" for="position">Position</label>
       <div class="col-sm-12">
-        <input type="text" class="form-control" name="position" id="position" placeholder="Position" required>
+        <input type="text" class="form-control" name="position" id="position" placeholder="Position" >
        </input>
-      </div>
-    </div>
+      </div></div>
     <div class="form-group has-success has-feedback">
       <label class="col-sm-2 control-label" for="mobile">Mobile</label>
       <div class="col-sm-12">
-        <input type="tel" class="form-control" name="mobile" id="mobile" placeholder="Mobile" required>
-      </div>
-    </div>
+        <input type="tel" class="form-control" name="mobile" id="mobile" placeholder="Mobile" >
+      </div></div>
     <div class="form-group has-success has-feedback">
       <label class="col-sm-2 control-label" for="city_name">Branch Name</label>
       <div class="col-sm-12">
-        <input type="text" class="form-control" id="city_name" name="branch" placeholder="City" required>
-      </div>
-    </div>  
+        <input type="text" class="form-control" id="city_name" name="branch" placeholder="City" >
+      </div></div>
     <div class="form-group has-success has-feedback">
       <label class="col-sm-2 control-label" for="last_company">Last Company</label>
       <div class="col-sm-12">
-        <input type="text" class="form-control" name="lwc" id="last_company" placeholder="Last company" required>
-      </div>
+        <input type="text" class="form-control" name="lwc" id="last_company" placeholder="Last company" >
+      </div></div>
       <div class="form-group">
       <label class="col-sm-12 control-label" >Are you willing to relocate?</label>
       <div class="col-sm-12">
@@ -548,9 +656,24 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
       </div>
     </div>
     <div class="form-group has-success has-feedback">
+      <label class="col-sm-2 control-label" for="xp">Experience</label>
+      <div class="col-sm-12">
+        <input type="number" class="form-control" name="xp" id="xp" placeholder="Experience" >
+
+      </div>
+    </div>
+
+    <div class="form-group has-success has-feedback">
       <label class="col-sm-2 control-label" for="skill">Skill</label>
       <div class="col-sm-12">
-        <input type="textarea" class="form-control" name="skill" id="skill" placeholder="Skills" required>
+        <input type="textarea" class="form-control" name="skill" id="skill" placeholder="Skills" >
+
+      </div>
+    </div>
+    <div class="form-group has-success has-feedback">
+      <label class="col-sm-2 control-label" for="vision">Visions</label>
+      <div class="col-sm-12">
+        <input type="textarea" class="form-control" name="vision" id="vision" placeholder="Any aims" >
         <br><br>
       </div>
     </div>
@@ -585,9 +708,9 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
     <tbody>
 <?php
 
-$res = mysqli_query($link, "SELECT * from submissions ");
+$mn = mysqli_query($link, "SELECT * from submissions ");
 $count=0;
-while($row=mysqli_fetch_array($res))
+while($row=mysqli_fetch_array($mn))
 {
     echo "<tr>";
     echo "<td>"; echo $row["id"]; echo "</td>";
@@ -601,13 +724,13 @@ while($row=mysqli_fetch_array($res))
     echo "<td>"; echo $row["date"]; echo "</td>";
 
     echo "<td>"; ?><a href="edit.php?id=<?php echo $row["id"]; ?>"><button type="text/javascript" class="btn btn-success">Edit</button></a> <?php echo "</td>";
-    echo "<td>"; ?><a href="./delete.php?id=<?php echo $row["id"]; ?>"><button type="text/javascript" class="btn btn-danger">Delete</button></a> <?php echo "</td>";
-
-    echo "</tr>";
+    echo "<td>"; ?><a href="delete.php?id=<?php echo $row["id"]; ?>"><button type="text/javascript" class="btn btn-danger">Delete</button></a> <?php echo "</td>";
+    
+    echo "</tr>"; 
     $count= $count+1;
 }
 echo "<h2>";
-echo "Total Rows: " . $count;
+echo "Total Submissions: " . $count;
 echo "</h2>";
 ?>
     </tbody>
@@ -648,6 +771,10 @@ h2{
   </div>
 <br>
 </div>
+
+<br>
+</div>
+
 <br>
 
 <div id="bottom" class="center">
@@ -671,19 +798,37 @@ if(isset($_POST["insert"]))
   VALUES (NULL,'$_POST[fname]','$_POST[lname]','$_POST[email]','$_POST[linkedin]','$_POST[position]',
   '$_POST[branch]','$_POST[relocate]', '".$curr_date."' );" ;   
 
-  $sql.="INSERT INTO `applicant`( `name`, `email`, `mobile`, `dob`)
-   VALUES ('$_POST[fname]','$_POST[email]','$_POST[mobile]','$_POST[dob]');";
+  if ($link->query($sql) === TRUE) {
+  $last_id = $link->insert_id;
+  $sql.="INSERT INTO `applicant`(`id`, `name`, `email`, `mobile`, `dob`)
+  VALUES ( '$last_id','$_POST[fname]','$_POST[email]','$_POST[mobile]','$_POST[dob]');";
+
+  $sql.="INSERT INTO `background`(`id`,`name`, `lwc`, `xp`, `skill`) 
+  VALUES ( '$last_id','$_POST[fname]','$_POST[lwc]','$_POST[xp]','$_POST[skill]');";
+
+  $sql.="INSERT INTO `locate`(`id`,`name`, `branch`, `position`, `mobile`) 
+  VALUES ( '$last_id','$_POST[fname]','$_POST[branch]','$_POST[position]','$_POST[mobile]');";
+
+  $sql.="INSERT INTO `visions`(`id`,`name`, `vision`, `skills`) 
+  VALUES ( '$last_id','$_POST[fname]','$_POST[vision]','$_POST[skill]'); ";
+
+
 
 if (mysqli_multi_query($link, $sql)) {
-  ?>
-  <script type="text/javascript">
-  window.location.href=window.location.href;
-  </script>
-  <?php
+ ?>
+ <script type="text/javascript">
+ window.location.href=window.location.href;
+ </script>
+ <?php
 } 
 else {
-  echo "Error: " . $sql . "<br>" . mysqli_error($link);
+ echo "Error: " . $sql . "<br>" . mysqli_error($link);
 }
+
+} else {
+  echo "Error: " . $sql . "<br>" . $link->error;
+}
+  
 
 
 }

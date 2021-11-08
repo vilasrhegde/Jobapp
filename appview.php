@@ -45,6 +45,9 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
   text-decoration: none;
   color: #fff;
 }
+h2{
+  text-shadow: 0 4px 5px rgba(0, 0, 0, 0.493);
+}
  
 </style>
 
@@ -55,8 +58,8 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
   <h2>Get your info</h2>
   <form class="form-inline" action="" method="post">
   <div class="form-group">
-      <label for="fname">Email:</label>
-      <input type="email" class="form-control" id="fname" placeholder="Enter Email" name="email">
+      <label for="fname">Name:</label>
+      <input type="text" class="form-control" id="fname" placeholder="Enter First name" name="name">
     </div>
     <input type="submit" name="submit" class="btn btn-primary"></input>
   </form>
@@ -66,10 +69,16 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
 </center>
 <br><br><hr>
 
+<div class="center text-center">
+  <form action="" method="post">
+  <input type="submit" class="btn btn-warning" name="edit" value="Edit"></input>
+  <input type="submit" class="btn btn-danger" name="delete" value="Delete"></input>
+  </form>
 
+</div>
 <center>
 
-<div class="col-lg-12">
+<div class="col-md-12 ">
 <h2>Your details:</h2>
 <table class="table table-striped table-hover  table-responsive">
     <thead>
@@ -79,13 +88,14 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
         <th>Email</th>
         <th>Linkedin</th>
         <th>Position</th>
-        <th>Start Date</th>
+        <th>Branch Name</th>
         <th>Mobile</th>
-        <th>City Name</th>
+        <th>Birth Date</th>
         <th>Last Company</th>
-        <th>Comments</th>
-        <th>Edit</th>
-        <th>Delete</th>
+        <th>Experience</th>
+        <th>Skills</th>
+        <th>Relocate</th>
+        <th>Visions</th>
       </tr>
     </thead>
     <tbody>
@@ -93,28 +103,32 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
 
 if(isset($_POST['submit']))
 {
-    $res = mysqli_query($link, "SELECT * from submissions WHERE email= '$_POST[email]' ");
+    $res = mysqli_query($link, "SELECT s.fname,s.lname,s.email,s.linkedin,s.position,s.branch,s.relocate,a.dob,b.lwc,b.xp,b.skill,
+    l.mobile,v.vision from submissions s,applicant a,`locate` l,background b,visions v WHERE  fname= '$_POST[name]' ;");
     while($row=mysqli_fetch_array($res))
     {
-        echo "<tr>";
-        echo "<td>"; echo $row["first_name"]; echo "</td>";
-        echo "<td>"; echo $row["last_name"]; echo "</td>";
+
+        echo "<tr>"; 
+        echo "<td>"; echo $row["fname"]; echo "</td>";
+        echo "<td>"; echo $row["lname"]; echo "</td>";
         echo "<td>"; echo $row["email"]; echo "</td>";
         echo "<td>"; echo $row["linkedin"]; echo "</td>";
         echo "<td>"; echo $row["position"]; echo "</td>";
-        echo "<td>"; echo $row["start_date"]; echo "</td>";
+        echo "<td>"; echo $row["branch"]; echo "</td>";
         echo "<td>"; echo $row["mobile"]; echo "</td>";
-        echo "<td>"; echo $row["city_name"]; echo "</td>";
-        echo "<td>"; echo $row["last_company"]; echo "</td>";
-        echo "<td>"; echo $row["comments"]; echo "</td>";
-    
-        echo "<td>"; ?><a href="viewsome.php?id=<?php echo $row["id"]; ?>"><button type="text/javascript" class="btn btn-success">Edit</button></a> <?php echo "</td>";
-        echo "<td>"; ?><a href="appdelete.php?id=<?php echo $row["id"]; ?>"><button type="text/javascript" class="btn btn-danger">Delete</button></a> <?php echo "</td>";
+        echo "<td>"; echo $row["dob"]; echo "</td>";
+        echo "<td>"; echo $row["lwc"]; echo "</td>";
+        echo "<td>"; echo $row["xp"]; echo "</td>";
+        echo "<td>"; echo $row["skill"]; echo "</td>";
+        echo "<td>"; echo $row["relocate"]; echo "</td>";
+        echo "<td>"; echo $row["vision"]; echo "</td>";        
     
         echo "</tr>";
+     
     }
-    
+
 }
+
 
 
 
@@ -123,7 +137,7 @@ if(isset($_POST['submit']))
     </tbody>
   </table>
 <center>
-  <div class="container  text-center"  style="margin: auto;">
+  <div class="container text-center"  style="margin: auto;">
     <br>
   <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#demo" style="margin: auto;">Policy</button>
   <div style="text-align: center;" id="demo" class="collapse">
@@ -131,11 +145,7 @@ These informations will not be shared or altered in any cases. Give right inform
 <p style="text-align: center;color: rgba(0, 0, 0, 0.493);bottom: 5%">&copy; <script>document.write(new Date().getFullYear())</script> Vilas Hegde All Rights Reserved</p>
 
   </div>
-
-</center>
   </div>
-
-</div>
 </center>
 
 <style>
@@ -144,7 +154,7 @@ These informations will not be shared or altered in any cases. Give right inform
     display: flex;
     flex-direction: column;
     
-  }
+  } 
   td{
     display: flex;
     flex-direction: column;
