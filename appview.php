@@ -20,7 +20,7 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8">          
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="icon" type="image/webp" sizes="32x32"  href="J.png">   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -69,13 +69,7 @@ h2{
 </center>
 <br><br><hr>
 
-<div class="center text-center">
-  <form action="" method="post">
-  <input type="submit" class="btn btn-warning" name="edit" value="Edit"></input>
-  <input type="submit" class="btn btn-danger" name="delete" value="Delete"></input>
-  </form>
 
-</div>
 <center>
 
 <div class="col-md-12 ">
@@ -101,14 +95,34 @@ h2{
     <tbody>
 <?php
 
+date_default_timezone_set('Asia/Kolkata'); 
+$curr_date= date("Y-m-d H:i:s"); // time in India
+
+$firstname = "";
+$lastname= "";
+$email= "";
+$linkedin= "";
+$position="";
+$branch="";
+$mobile="";
+$dob="";
+$lastcompany="";
+$xp="";
+$skill="";
+$relocate="";
+$vision="";
+
+
 if(isset($_POST['submit']))
 {
-    $res = mysqli_query($link, "SELECT s.fname,s.lname,s.email,s.linkedin,s.position,s.branch,s.relocate,a.dob,b.lwc,b.xp,b.skill,
-    l.mobile,v.vision from submissions s,applicant a,`locate` l,background b,visions v WHERE  fname= '$_POST[name]' ;");
-    while($row=mysqli_fetch_array($res))
+    $res = mysqli_query($link, "SELECT s.id, s.fname,s.lname,s.email,s.linkedin,s.position,s.branch,s.relocate,a.dob,b.lwc,b.xp,b.skill,
+    l.mobile,v.vision from submissions s,applicant a,`locate` l,background b,visions v WHERE  s.fname= '$_POST[name]' and  a.name='$_POST[name]' 
+    and l.name='$_POST[name]' and  b.name='$_POST[name]' and v.name='$_POST[name]' and s.id=a.id and s.id =l.id and s.id= b.id and s.id =v.id ;");
+   while($row=mysqli_fetch_array($res))
     {
-
+     
         echo "<tr>"; 
+       
         echo "<td>"; echo $row["fname"]; echo "</td>";
         echo "<td>"; echo $row["lname"]; echo "</td>";
         echo "<td>"; echo $row["email"]; echo "</td>";
@@ -121,12 +135,16 @@ if(isset($_POST['submit']))
         echo "<td>"; echo $row["xp"]; echo "</td>";
         echo "<td>"; echo $row["skill"]; echo "</td>";
         echo "<td>"; echo $row["relocate"]; echo "</td>";
-        echo "<td>"; echo $row["vision"]; echo "</td>";        
-    
-        echo "</tr>";
-     
-    }
+        echo "<td>"; echo $row["vision"]; echo "</td>"; 
+        echo "</tr>";      
 
+        echo "<td>"; ?><a href="viewsome.php?id=<?php echo $row["id"]; ?>"><button type="text/javascript" class="btn btn-success">Edit</button></a> <?php echo "</td>";
+        echo "<td>"; ?><a href="appdelete.php?id=<?php echo $row["id"]; ?>"><button type="text/javascript" class="btn btn-danger">Delete</button></a> <?php echo "</td>";
+       
+       
+        echo "</tr>";   
+  
+    }
 }
 
 
@@ -171,5 +189,7 @@ These informations will not be shared or altered in any cases. Give right inform
 
 }
 </style>
+
+
 </body>
 </html>

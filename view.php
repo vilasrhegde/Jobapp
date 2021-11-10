@@ -64,7 +64,7 @@ $curr_date= date("Y-m-d H:i:s"); // time in India
       <li><a href="./tables/visions.php">Vision</a></li>
       <li class="divider"></li>
       <li class="dropdown-header">Complete log</li>
-      <li><a href="#">View all</a></li>
+      <li><a href="./tables/alltables.php">View all</a></li>
     </ul>
 </div>
 
@@ -74,6 +74,7 @@ $curr_date= date("Y-m-d H:i:s"); // time in India
   <a class="active"  href="index.html">Home</a>
   <a href="#table"><span>Table</span></a>
   <a href="#bottom"><span>Bottom</span></a> 
+  <a href="#hold" onclick="ins()">Insert</a>
   </div>
 <form action="" method="post">
 <div class="input-group">
@@ -160,7 +161,8 @@ $(document).ready(function(){
 </style>
 
 <?php
-
+  $link = mysqli_connect("localhost", "root" , "") or die (mysqli_error($link));
+  mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
 
 if(isset($_POST['search']))
 {
@@ -176,9 +178,9 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
     $eml = mysqli_query($link, "SELECT * from submissions WHERE email like '%$_POST[value]%' ");
     $city = mysqli_query($link, "SELECT * from submissions WHERE branch  like '%$_POST[value]%' ");
 
-    $lwc = mysqli_query($link, "SELECT * from background where lwc like '%$_POST[value]%'");
-    $xp = mysqli_query($link, "SELECT * from background where xp = '$_POST[value]'");
-    $lwc = mysqli_query($link, "SELECT * from background where skill like '%$_POST[value]%'");
+    // $lwc = mysqli_query($link, "SELECT * from background where lwc like '%$_POST[value]%'");
+    // $xp = mysqli_query($link, "SELECT * from background where xp = '$_POST[value]'");
+    // $skil = mysqli_query($link, "SELECT * from background where skill like '%$_POST[value]%'");
 
     
     echo "<center>";
@@ -186,7 +188,7 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
 
   <tr>
   <th>First name</th>
-  <th>Last name</th>
+  <th>Last name</th>  
   <th>Email</th>
   <th>LinkedIn</th>
   <th>Position</th>
@@ -279,26 +281,7 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
         $count= $count+1;
     }
     
-    while($row=mysqli_fetch_array($lwc))
-    {
-        echo "<tr>";
-        echo "<td>"; echo $row["fname"]; echo "</td>";
-        echo "<td>"; echo $row["lname"]; echo "</td>";
-        echo "<td>"; echo $row["email"]; echo "</td>";
-        echo "<td>"; echo $row["linkedin"]; echo "</td>";
-        echo "<td>"; echo $row["position"]; echo "</td>";
-        echo "<td>"; echo $row["branch"]; echo "</td>";
-    
-        echo "<td>"; ?><a href="edit.php?id=<?php echo $row["id"]; ?>"><button type="text/javascript" class="btn btn-success">Edit</button></a> <?php echo "</td>";
-        echo "<td>"; ?><a href="delete.php?id=<?php echo $row["id"]; ?>"><button type="text/javascript" class="btn btn-danger">Delete</button></a> <?php echo "</td>";
-    
-        echo "</tr>";
-        $count= $count+1;
-    }
-    echo "<h2>";
-    echo "Total Search results: " . $count;
-    echo "</h2>";
-    echo "</table>";
+
     
   }//if
 
@@ -317,21 +300,28 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
   <input style="padding: 5px;border-radius:5px;" id="from" type="date" name="from" placeholder="Date from">
   <label style="margin-left:25px;" for="to">To:</label>
   <input style="padding: 5px;border-radius:5px;" id="to" type="date"  name="to" placeholder="Date To">
-  <input class="p-2 rounded mx-5" style="padding:  5px;background:#222; color:#fff" type="submit"  class="mx-3" name="dsort" value="Submit">
+  <input class="p-2 rounded mx-5" style="padding:  5px;margin-left:10px;background:#222; color:#fff" type="submit"  class="mx-3" name="dsort" value="Submit">
 </form>
 <hr>
 <br>
 
 <form action="" method="post">
-
-        <input type="submit" class="btn btn-primary mx-5 px-4" name="job" value="Developer"></input>
+<div class="center">
+<input type="submit" class="btn btn-primary mx-5 px-4" name="job" value="Developer"></input>
         <input type="submit" class="btn btn-danger mx-5 px-5" name="job" value="HR"> </input>    
         <input type="submit" class="btn btn-success mx-5 px-5" name="job" value="Tester"> </input>
-        <input type="submit" class="btn btn-warning mx-5 px-5" name="ot" value="Other"> </input>    
-         
+        <input type="submit" class="btn btn-warning mx-5 px-5" name="ot" value="Other"> </input> 
+</div>   
 </form>
 <style>
-  
+  .center input{
+    padding: 5px 20px;
+    margin:0 10px;
+  }
+  h2{
+    text-align: center  ;
+  }
+
 </style>
 <br><br>
 
@@ -563,6 +553,7 @@ mysqli_free_result($resulthr);
 }
 
 ?>  
+
 <form class="form-row " method="post" action="">
 
     <div class="form-group">  
@@ -589,10 +580,10 @@ mysqli_free_result($resulthr);
     <input type="submit" name="setmax" style="width: 100%;background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);" class="btn btn-primary btn-lg btn-block"   />
 </form>
 </div>
+<div class="hold" id="hold">
 
-
-<div  class="container col-lg-12"  >
-  <h2>Enter Basic details</h2>
+<div  class="container col-sm-12"  >
+  <h2>Insert data</h2>
 
   <form class="form-row " method="post" action="">
 
@@ -602,10 +593,8 @@ mysqli_free_result($resulthr);
         <input class="form-control" id="firstname" type="text" value="" name="fname" placeholder="First name" >
       </div>
     </div>
-    
-
     <div class="form-group">
-      <label class="col-sm-2 control-label" for="lastname">Last name</label>
+      <label class="col-sm-12 control-label" for="lastname">Last name</label>
       <div class="col-sm-12">
         <input type="text" class="form-control" id="lastname" type="text" name="lname" placeholder="Last name" >
       </div></div>
@@ -615,33 +604,33 @@ mysqli_free_result($resulthr);
         <input type="text" class="form-control" name="email" id="email" placeholder="Email" >
       </div></div>
     <div class="form-group has-success has-feedback">
-      <label class="col-sm-2 control-label" for="linkedin">LinkedIn</label>
+      <label class="col-sm-12 control-label" for="linkedin">LinkedIn</label>
       <div class="col-sm-12">
         <input type="url" class="form-control" name="linkedin" id="linkedin" placeholder="LinkedIn" >
       </div></div>
     <div class="form-group has-success has-feedback">
-      <label class="col-sm-2 control-label" for="dob">Date of Birth</label>
+      <label class="col-sm-12 control-label" for="dob">Date of Birth</label>
       <div class="col-sm-12">
         <input type="date" class="form-control" name="dob" id="dob" placeholder="Date of birth" >
       </div></div>
     <div class="form-group has-success has-feedback">
-      <label class="col-sm-2 control-label" for="position">Position</label>
+      <label class="col-sm-12 control-label" for="position">Position</label>
       <div class="col-sm-12">
         <input type="text" class="form-control" name="position" id="position" placeholder="Position" >
        </input>
       </div></div>
     <div class="form-group has-success has-feedback">
-      <label class="col-sm-2 control-label" for="mobile">Mobile</label>
+      <label class="col-sm-12 control-label" for="mobile">Mobile</label>
       <div class="col-sm-12">
         <input type="tel" class="form-control" name="mobile" id="mobile" placeholder="Mobile" >
       </div></div>
     <div class="form-group has-success has-feedback">
-      <label class="col-sm-2 control-label" for="city_name">Branch Name</label>
+      <label class="col-sm-12 control-label" for="city_name">Branch Name</label>
       <div class="col-sm-12">
         <input type="text" class="form-control" id="city_name" name="branch" placeholder="City" >
       </div></div>
     <div class="form-group has-success has-feedback">
-      <label class="col-sm-2 control-label" for="last_company">Last Company</label>
+      <label class="col-sm-12 control-label" for="last_company">Last Company</label>
       <div class="col-sm-12">
         <input type="text" class="form-control" name="lwc" id="last_company" placeholder="Last company" >
       </div></div>
@@ -651,38 +640,49 @@ mysqli_free_result($resulthr);
   <input type="radio" name="relocate" value="Yes"> Yes </label>
                     <input type="radio" aria-selected="true" name="relocate" value="No"> No 
                       <input type="radio" name="relocate" aria-selected="true" value="Notsure"> Not Sure 
-                      <!-- <input type="submit" name="submit" value="Submit" checked>  -->
       </div>     
       </div>
     </div>
     <div class="form-group has-success has-feedback">
-      <label class="col-sm-2 control-label" for="xp">Experience</label>
+      <label class="col-sm-12 control-label" for="xp">Experience</label>
       <div class="col-sm-12">
         <input type="number" class="form-control" name="xp" id="xp" placeholder="Experience" >
-
       </div>
     </div>
-
     <div class="form-group has-success has-feedback">
-      <label class="col-sm-2 control-label" for="skill">Skill</label>
+      <label class="col-sm-12 control-label" for="skill">Skill</label>
       <div class="col-sm-12">
         <input type="textarea" class="form-control" name="skill" id="skill" placeholder="Skills" >
-
       </div>
     </div>
     <div class="form-group has-success has-feedback">
-      <label class="col-sm-2 control-label" for="vision">Visions</label>
+      <label class="col-sm-12 control-label" for="vision">Visions</label>
       <div class="col-sm-12">
         <input type="textarea" class="form-control" name="vision" id="vision" placeholder="Any aims" >
         <br><br>
       </div>
     </div>
-    <br><br>
     <input type="submit" name="insert" style="width: 100%;background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);margin:10% 0;" class="btn btn-primary btn-lg btn-block"   />
   
   </form>
 </div>
 
+</div>
+<style>
+  #hold{
+    max-height: 100%;
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+</style>
+<script>
+function ins(){
+  document.getElementById("hold").style.display="flex";
+}
+</script>
 
 
 <br><br>
@@ -708,7 +708,7 @@ mysqli_free_result($resulthr);
     <tbody>
 <?php
 
-$mn = mysqli_query($link, "SELECT * from submissions ");
+$mn = mysqli_query($link, "SELECT * from `submissions` ");
 $count=0;
 while($row=mysqli_fetch_array($mn))
 {
@@ -758,10 +758,16 @@ h2{
 #firsta:hover{
       border-radius: 0;
     }
+    a{
+      text-decoration: none;
+    }
+    a:hover{
+      text-decoration: none;
+    }
 </style>
 
 
-<div class="container">
+<div class="container" id="bottom">
   <h2>Total Recruitment:</h2>
   <p></p> 
   <div class="progress">
@@ -776,14 +782,80 @@ h2{
 </div>
 
 <br>
+<div class="chart">
 
-<div id="bottom" class="center">
+<div id="piechart">
+  
+</div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+// Load google charts
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+// Draw the chart and set the chart values
+function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+  ['Skill', 'Number of persons'],
+  ['Problem Solving', <?php $prob=mysqli_query($link, "SELECT count(*) skill FROM `background` WHERE skill like '%solv%';");
+$row=mysqli_fetch_array($prob);
+echo $row["skill"];  ?>],
+  ['Ethical Hacking',  <?php $hack=mysqli_query($link, "SELECT count(*) skill FROM `background` WHERE skill like '%hack%';");
+$row=mysqli_fetch_array($hack);
+echo $row["skill"];  ?>],
+  ['Data Science and Analysis',  <?php $data=mysqli_query($link, "SELECT count(*) skill FROM `background` WHERE skill like '%data%';");
+$row=mysqli_fetch_array($data);
+echo $row["skill"];  ?>],
+  ['Web Development',  <?php $web=mysqli_query($link, "SELECT count(*) skill FROM `background` WHERE skill like '%web%';");
+$row=mysqli_fetch_array($web);
+echo $row["skill"];  ?>],
+  ['Debugging',  <?php $bug=mysqli_query($link, "SELECT count(*) skill FROM `background` WHERE skill like '%bug%';");
+$row=mysqli_fetch_array($bug);
+echo $row["skill"];  ?>],
+  ['Coding',  <?php $cod=mysqli_query($link, "SELECT count(*) skill FROM `background` WHERE skill like '%cod%';");
+$row=mysqli_fetch_array($cod);
+echo $row["skill"];  ?>],
+  ['Big data',  <?php $big=mysqli_query($link, "SELECT count(*) skill FROM `background` WHERE skill like '%big data%';");
+$row=mysqli_fetch_array($big);
+echo $row["skill"];  ?>],
+  ['Other',  <?php $other=mysqli_query($link, "SELECT count(*) skill FROM `background` WHERE skill not like '%solv%' and '%data%' and '%web%'  ;");
+$row=mysqli_fetch_array($other);
+echo $row["skill"];  ?>]
+
+
+]);
+
+  // Optional; add a title and set the width and height of the chart
+  var options = {'title':'The Skills applicants mentioned', 'width':600, 'height':500};
+
+  // Display the chart inside the <div> element with id="piechart"
+  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  chart.draw(data, options);
+}
+</script>
+
+</div>
+
+<style>
+  .chart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+</style>
+ 
+
+
+
+<div  class="center">
         <p style="text-align: center;color: rgba(0, 0, 0, 0.493);bottom: 5%;">&copy; <script>document.write(new Date().getFullYear())</script> Vilas Hegde All Rights Reserved</p>
 </div>
 
 
 
- 
 
 
 
@@ -800,30 +872,23 @@ if(isset($_POST["insert"]))
 
   if ($link->query($sql) === TRUE) {
   $last_id = $link->insert_id;
-  $sql.="INSERT INTO `applicant`(`id`, `name`, `email`, `mobile`, `dob`)
-  VALUES ( '$last_id','$_POST[fname]','$_POST[email]','$_POST[mobile]','$_POST[dob]');";
+  $sql1=mysqli_query($link,"INSERT INTO `applicant`(`id`, `name`, `email`, `mobile`, `dob`)
+  VALUES ( '$last_id','$_POST[fname]','$_POST[email]','$_POST[mobile]','$_POST[dob]');");
 
-  $sql.="INSERT INTO `background`(`id`,`name`, `lwc`, `xp`, `skill`) 
-  VALUES ( '$last_id','$_POST[fname]','$_POST[lwc]','$_POST[xp]','$_POST[skill]');";
+  $sql2=mysqli_query($link,"INSERT INTO `background`(`id`,`name`, `lwc`, `xp`, `skill`) 
+  VALUES ( '$last_id','$_POST[fname]','$_POST[lwc]','$_POST[xp]','$_POST[skill]');");
 
-  $sql.="INSERT INTO `locate`(`id`,`name`, `branch`, `position`, `mobile`) 
-  VALUES ( '$last_id','$_POST[fname]','$_POST[branch]','$_POST[position]','$_POST[mobile]');";
+  $sql3=mysqli_query($link,"INSERT INTO `locate`(`id`,`name`, `branch`, `position`, `mobile`) 
+  VALUES ( '$last_id','$_POST[fname]','$_POST[branch]','$_POST[position]','$_POST[mobile]');");
 
-  $sql.="INSERT INTO `visions`(`id`,`name`, `vision`, `skills`) 
-  VALUES ( '$last_id','$_POST[fname]','$_POST[vision]','$_POST[skill]'); ";
-
-
-
-if (mysqli_multi_query($link, $sql)) {
+  $sql4=mysqli_query($link,"INSERT INTO `visions`(`id`,`name`, `vision`, `skills`) 
+  VALUES ( '$last_id','$_POST[fname]','$_POST[vision]','$_POST[skill]'); ");
+$link -> close();
  ?>
  <script type="text/javascript">
  window.location.href=window.location.href;
  </script>
  <?php
-} 
-else {
- echo "Error: " . $sql . "<br>" . mysqli_error($link);
-}
 
 } else {
   echo "Error: " . $sql . "<br>" . $link->error;
@@ -858,7 +923,11 @@ window.location.href=window.location.href;
 <?php
 }
 
-
+if(isset($_POST['setmax'])){
+  $mxdev=$_POST['dev'];
+  $mxhr=$_POST['hr'];
+  $mxtester=$_POST['test'];
+}
 ?>
 
 

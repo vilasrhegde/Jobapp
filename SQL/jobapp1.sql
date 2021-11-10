@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 06, 2021 at 06:35 PM
+-- Generation Time: Nov 10, 2021 at 02:55 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -35,6 +35,20 @@ CREATE TABLE `applicant` (
   `dob` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `applicant`
+--
+
+INSERT INTO `applicant` (`id`, `name`, `email`, `mobile`, `dob`) VALUES
+(23, 'shuvam', 'shivam', 86453216, '2021-11-07'),
+(52, 'Surya K', 'surya@gmail.com', 2147483647, '2021-11-09'),
+(55, 'Bhavish', 'bhavish@gmail.com', 2147483647, '2021-11-09'),
+(57, 'Suchitra P', 'suchitra@gmail.com', 2147483647, '2021-11-09'),
+(59, 'suvarna ', 'suvarna@gmail.com', 2147483647, '0000-00-00'),
+(61, 'Sooraj', 'sooraj@gmail.com', 982738927, '2001-02-02'),
+(65, 'Raj', 'raj@gmail.com', 973928737, '1995-12-10'),
+(71, 'Samarth', 'samarht@gmail.com', 2147483647, '0000-00-00');
+
 -- --------------------------------------------------------
 
 --
@@ -49,6 +63,20 @@ CREATE TABLE `background` (
   `skill` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `background`
+--
+
+INSERT INTO `background` (`id`, `name`, `lwc`, `xp`, `skill`) VALUES
+(23, 'shuvam', 'TCS', 2, 'Web deveopment'),
+(52, 'Surya K', 'infosys', 2, 'Data entry'),
+(55, 'Bhavish', 'Zerodha', 2, 'Testing'),
+(57, 'Suchitra P', 'infosys', 2, 'Data entry'),
+(59, 'suvarna ', 'infosys', 2, 'Data entry'),
+(61, 'Sooraj', 'Bosch', 4, 'Server side'),
+(65, 'Raj', 'Microsoft', 3, 'Big data'),
+(71, 'Samarth', 'Google', 5, 'Web deveopment');
+
 -- --------------------------------------------------------
 
 --
@@ -62,6 +90,20 @@ CREATE TABLE `locate` (
   `position` varchar(100) NOT NULL,
   `mobile` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `locate`
+--
+
+INSERT INTO `locate` (`id`, `name`, `branch`, `position`, `mobile`) VALUES
+(23, 'shuvam', 'Kolkatta', 'HR', 86453216),
+(52, 'Surya', 'Manglore', 'Developer', 65643554),
+(55, 'Bhavish', 'Banglore', 'Tester', 2147483647),
+(57, 'Suchitra', 'Pune', 'Web', 2147483647),
+(59, 'suvarna ', '', 'Data Analytics', 2147483647),
+(61, 'Sooraj', 'Mysore', 'Tester', 982738927),
+(65, 'Raj', 'Bengaluru', 'HR', 973928737),
+(71, 'Samarth', 'Banglore', 'Cybersecurity', 2147483647);
 
 -- --------------------------------------------------------
 
@@ -86,20 +128,40 @@ CREATE TABLE `submissions` (
 --
 
 INSERT INTO `submissions` (`id`, `fname`, `lname`, `email`, `linkedin`, `position`, `branch`, `relocate`, `date`) VALUES
-(3, 'Seeddtaram', 'Naiksa', 'seyet@gmail.com', 'linkedin/segggggete', 'Tester', 'Bombay', 'Not sure', '2021-11-06'),
-(5, 'mama', 'gaonkar', 'manu@gmail.com', 'https://www.linkedin.com/in/shyam-535ff535/', 'Noob', 'Manglore', 'Yes', '2021-11-06'),
-(7, 'manoj', 'gafdfdsonkar', 'manu@gmail.com', 'linkedin/', 'Noob', 'Manglore', 'Yes', '2021-11-06'),
-(8, 'ffdasd', 'gaonkar', 'manu@gmail.com', 'linkedin/', 'Noob', 'Manglore', 'Yes', '2021-11-06'),
-(9, 'ffff', 'asgaonkar', 'manu@gmail.com', 'linkedin/', 'chooo', 'Manglore', 'Yes', '2021-11-06'),
-(10, 'ss', 'gaonkar', 'manu@gmail.com', 'linkedin/', 'Noob', 'Manglore', 'Yes', '2021-11-06'),
-(11, 'Vilas', 'Hegde', 'vilasrhegde@gmail.com', 'https://www.linkedin.com', 'Web', 'Sirsi', 'No', '2021-11-06'),
-(12, 'sandesh', 'japani', 'sandesh@GMAIL.COM', 'https://github.com/search?q=job+application+dbms', 'Web', 'Shimoga', 'No', '2021-11-06'),
-(13, '', '', 'vivek', 'http://https://github.com/search?q=job+application+dbms', 'Developer', 'Shimoga', '', '0000-00-00'),
-(14, '', '', 'raj@gmail.com', 'https://www.linkedin.com/inraj/', 'Developer', 'Banglore', '', '0000-00-00'),
-(15, 'rakshit', 'Shetty', 'raok@gmail.com', 'https://www.linkedin.com/rakh', 'HR', 'Manglore', '', '0000-00-00'),
-(16, 'rama', 'shyama', 'bhama@gmail.com', 'https://www.linkedin.com/ram', 'HR', 'Banglore', 'No', '2021-11-06'),
-(17, 'sulekha', 'karanth', 'sulekha@gmail.com', 'https://www.linkedin.com/sulekha', 'Tester', 'hasan', 'Notsure', '2021-11-06'),
-(18, 'Vikas', 'Hegde', 'vilasrhegde@gmail.com', 'https://www.linkedin.com', 'Developer', 'Banglore', 'No', '2021-11-06');
+(23, 'shivam', 'ravan', 'shivam@gmail.com', 'https://www.linkedin.com/in/vilas-hegde-1a2796197/', 'HR', 'Kolkatta', '', '2021-11-09'),
+(44, 'Thena', 'Therous', 'thena@gmail.com', 'https://www.linkedin.com/thena', 'Developer', 'Eros', 'No', '2021-11-07'),
+(52, 'Surya K', 'Bhat', 'surya@gmail.com', 'https://www.linkedin.com/surya', 'Developer', 'Manglore', '', '2021-11-09'),
+(55, 'Bhavish', 'Samanii', 'bhavish@gmail.com', 'http://https://github.com/ishanpatel27/Job-Application-Assignment', 'Tester', 'Banglore', 'No', '2021-11-09'),
+(56, 'Bhavish', 'Samani', 'bhavish@gmail.com', 'http://https://github.com/ishanpatel27/Job-Application-Assignment', 'Tester', 'Banglore', 'No', '2021-11-08'),
+(57, 'Suchitra P', 'Salaga', 'suchitra@gmail.com', 'https://www.linkedin.com/suchi', 'Web', 'Pune', 'Yes', '2021-11-09'),
+(58, 'Suchitra', 'Salaga', 'suchitra@gmail.com', 'https://www.linkedin.com/suchi', 'Web', 'Pune', 'Yes', '2021-11-08'),
+(59, 'suvarna ', 'sunugar', 'suvarna@gmail.com', 'https://www.linkedin.com/suvu', 'Data Analytics', '', 'Yes', '2021-11-08'),
+(61, 'Sooraj', 'Sharma', 'sooraj@gmail.com', 'https://www.linkedin.com/sooraj', 'Tester', 'Mysore', 'Yes', '2021-11-09'),
+(65, 'Raj', 'Kumar', 'raj@gmail.com', 'https://www.linkedin.com/raj', 'HR', 'Bengaluru', 'Yes', '2021-11-09'),
+(71, 'Samarth', 'Bhat', 'samarht@gmail.com', 'https://www.linkedin.com/samarth', 'Cybersecurity', 'Banglore', 'Yes', '2021-11-09'),
+(72, 'Samarth', 'Bhat', 'samarht@gmail.com', 'https://www.linkedin.com/samarth', 'Cybersecurity', 'Banglore', 'Yes', '2021-11-09');
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `total`
+-- (See below for the actual view)
+--
+CREATE TABLE `total` (
+`fname` varchar(100)
+,`lname` varchar(100)
+,`email` varchar(100)
+,`linkedin` varchar(100)
+,`position` varchar(100)
+,`branch` varchar(100)
+,`relocate` varchar(10)
+,`dob` date
+,`lwc` varchar(100)
+,`xp` int(11)
+,`skill` varchar(100)
+,`mobile` int(11)
+,`vision` text
+);
 
 -- --------------------------------------------------------
 
@@ -113,6 +175,29 @@ CREATE TABLE `visions` (
   `vision` text NOT NULL,
   `skills` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `visions`
+--
+
+INSERT INTO `visions` (`id`, `name`, `vision`, `skills`) VALUES
+(23, 'shuvam', 'NOTHING', 'Web deveopment'),
+(52, 'Surya K', 'Many things', 'Data entry'),
+(55, 'Bhavish', 'nothing', 'Testing'),
+(57, 'Suchitra P', 'nothing', 'Data entry'),
+(59, 'suvarna ', 'nothing\r\n\r\n\r\n', 'Data entry'),
+(61, 'Sooraj', 'Booming future', 'Server side'),
+(65, 'Raj', 'No aims', 'Big data'),
+(71, 'Samarth', 'Nothing as of now\r\n', 'Web deveopment');
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `total`
+--
+DROP TABLE IF EXISTS `total`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `total`  AS SELECT `s`.`fname` AS `fname`, `s`.`lname` AS `lname`, `s`.`email` AS `email`, `s`.`linkedin` AS `linkedin`, `s`.`position` AS `position`, `s`.`branch` AS `branch`, `s`.`relocate` AS `relocate`, `a`.`dob` AS `dob`, `b`.`lwc` AS `lwc`, `b`.`xp` AS `xp`, `b`.`skill` AS `skill`, `l`.`mobile` AS `mobile`, `v`.`vision` AS `vision` FROM ((((`submissions` `s` join `applicant` `a`) join `locate` `l`) join `background` `b`) join `visions` `v`) WHERE `s`.`fname` = `a`.`name` AND `s`.`fname` = `l`.`name` AND `s`.`fname` = `b`.`name` AND `s`.`fname` = `v`.`name` AND `s`.`id` = `a`.`id` = `l`.`id` = `b`.`id` = `v`.`id` ;
 
 --
 -- Indexes for dumped tables
@@ -156,7 +241,7 @@ ALTER TABLE `visions`
 -- AUTO_INCREMENT for table `submissions`
 --
 ALTER TABLE `submissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- Constraints for dumped tables

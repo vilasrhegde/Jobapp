@@ -1,6 +1,7 @@
 <?php
-$link = mysqli_connect("localhost", "root" , "") or die (mysqli_error($link));
-mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
+$link =new mysqli("localhost","root","","jobapp1");
+date_default_timezone_set('Asia/Kolkata'); 
+$curr_date= date("Y-m-d H:i:s"); // time in India
 
 $id =$_GET["id"];
 
@@ -19,26 +20,28 @@ $relocate="";
 $vision="";
 
 
+$res = mysqli_query($link, "SELECT s.id, s.fname,s.lname,s.email,s.linkedin,s.position,s.branch,a.dob,b.lwc,b.xp,b.skill,
+l.mobile,v.vision from submissions s,applicant a,`locate` l,background b,visions v
+WHERE  s.id=$id ;") or mysqli_error($link) ; 
 
-$res = mysqli_query($link, "SELECT s.fname,s.lname,s.email,s.linkedin,s.position,s.branch,s.relocate,a.dob,b.lwc,b.xp,b.skill,
-l.mobile,v.vision from submissions s,applicant a,`locate` l,background b,visions v WHERE `id`=$id") or mysqli_error($link) ; 
-
-while($row=mysqli_fetch_array($res))
-{
-    $firstname=$row["fname"];
-    $lastname=$row["lname"];
-    $email=$row["email"];
-    $linkedin= $row["linkedin"];
-    $position=$row["position"];
-    $branch=$row["branch"];
-    $mobile=$row["mobile"];
-    $dob=$row["dob"];
-    $lastcompany=$row["lwc"];
-    $xp=$row["xp"];
-    $skill=$row["skill"];
-    $relocate=$row["relocate"];
-    $vision=$row["vision"];
+if($res!=""){
+  while($rows=mysqli_fetch_array($res))
+  {
+    $firstname = $rows["fname"];
+    $lastname= $rows["lname"];
+    $email=$rows["email"];
+    $linkedin= $rows["linkedin"];
+    $position= $rows["position"];
+    $branch= $rows["branch"];
+    $mobile= $rows["mobile"];
+    $dob= $rows["dob"];
+    $lastcompany=  $rows["lwc"];
+    $xp= $rows["xp"];
+    $skill= $rows["skill"];
+    $vision= $rows["vision"];
+  }
 }
+
 
 ?>
 
@@ -54,12 +57,13 @@ while($row=mysqli_fetch_array($res))
 </head>
 <body>
 
+
 <div class="form-group">
     <form action="" method="post">
         <h1 style="text-align: center;text-shadow:4px 4px 5px rgba(0,0,0,0.4); font-weight:900;">Edit entries:</h1>
       <br>
    
-<div class="col-sm-12">
+<div class="col-md-12">
       <label for="firstname">First Name:</label>
       <input required type="text" class="form-control" id="firstname" placeholder="Enter First name" name="firstname" value="<?php echo
       $firstname ?>">
@@ -90,33 +94,30 @@ while($row=mysqli_fetch_array($res))
 
         <label for="position">Position:</label>
         <input required  type="text" class="form-control" id="posiiton" placeholder="Enter Position" name="position" value="<?php echo
-        $position ?>">  <button type="button" class="btn btn-primary">Developer <span class="badge">7</span></button>
-        <button type="button" class="btn btn-danger">HR <span class="badge">3</span></button>    
-        <button type="button" class="btn btn-success">Testing <span class="badge">5</span></button>        </input>
+        $position ?>"></input>
       </div>  </div>  <br>
       <div class="form-group">
  <div class="col-sm-12">
-
-        <label for="start_date">Start date:</label>
-        <input required  type="date" class="form-control"  placeholder="Start date" name="start_date" value="<?php echo
-        $startdate ?>">
-      </div>   </div> <br>
+ <label for="branch">Branch name:</label>
+        <input required  type="text" class="form-control"  placeholder="Branch city name" name="branch" value="<?php echo
+        $branch ?>">
+      </div>  </div>  <br>
       <div class="form-group">
+ <div class="col-sm-12">
+ <div class="form-group">
        <div class="col-sm-12">
              <label for="mobile">Mobile:</label>
         <input required  type="tel" class="form-control"  placeholder="Mobile" name="mobile" value="<?php echo
         $mobile ?>">
       </div>  </div>  <br>
+
+        <label for="dob">Birth date:</label>
+        <input required  type="date" class="form-control"  placeholder="Birth date" name="dob" value="<?php echo
+        $dob ?>">
+      </div>   </div> <br>
+    
       <div class="form-group">
  <div class="col-sm-12">
-
-        <label for="city_name">City name:</label>
-        <input required  type="text" class="form-control"  placeholder="City name" name="city_name" value="<?php echo
-        $cityname ?>">
-      </div>  </div>  <br>
-      <div class="form-group">
- <div class="col-sm-12">
-
         <label for="last_company">Last Company:</label>
         <input required  type="text" class="form-control"  placeholder="Last company" name="last_company" value="<?php echo
         $lastcompany ?>">
@@ -124,15 +125,33 @@ while($row=mysqli_fetch_array($res))
       <div class="form-group">
            <div class="col-md-12">
 
-        <label for="comments">Comments:</label>
-        <input required  type="text" class="form-control"  placeholder="Comments" name="comments" value="<?php echo
-        $comments ?>">
+        <label for="xp">Experience:</label>
+        <input required  type="number" class="form-control"  placeholder="Field Experience" name="xp" value="<?php echo
+        $xp ?>">
+      </div>
+      </div>
+      <div class="form-group">
+           <div class="col-md-12">
+
+        <label for="skill">Skills:</label>
+        <input required  type="text" class="form-control"  placeholder="Skills" name="skill" value="<?php echo
+        $skill ?>">
+      </div>
+      </div>
+
+      <div class="form-group">
+           <div class="col-md-12">
+
+        <label for="vision">Visions:</label>
+        <input required  type="text" class="form-control"  placeholder="Visions" name="vision" value="<?php echo
+        $vision ?>">
       </div>
       </div>
    <div class="form-group">
            <div class="col-md-12">
 <br>
            <button type="submit" name="update" class="btn btn-warning btn-block">Update</button>
+           <br><br>
       </div>
       </div>
 
@@ -153,22 +172,36 @@ while($row=mysqli_fetch_array($res))
 
 if(isset($_POST["update"]))
 {
-    
+  $id =$_GET["id"];
 
-mysqli_query($link, "UPDATE  submissions set first_name= '$_POST[firstname]', last_name='$_POST[lastname]',
-email='$_POST[email]',linkedin='$_POST[linkedin]',position='$_POST[position]',`start_date`='$_POST[start_date]',
-mobile=$_POST[mobile] ,city_name= '$_POST[city_name]',last_company='$_POST[last_company]',comments='$_POST[comments]' 
-where id='$_GET[id]'")or die (mysqli_error($link));        
+// mysqli_query($link, "UPDATE  submissions s,applicant a,`locate` l,background b,visions v 
+//  set s.fname= '$_POST[firstname]', s.lname='$_POST[lastname]',a.name= '$_POST[firstname]',
+// s.email='$_POST[email]',s.linkedin='$_POST[linkedin]',s.position='$_POST[position]',dob='$_POST[dob]',
+// l.mobile=$_POST[mobile] ,l.branch= '$_POST[branch]',b.lwc='$_POST[last_company]',v.vision='$_POST[vision]' ,
+// s.relocate='$_POST[relocate]',b.skill='$_POST[skill]',xp='$_POST[xp]'
+// where s.id=$id and  s.fname= '$_POST[firstname]' and s.fname= a.name= l.name= b.name=v.name and s.id=a.id=l.id=b.id=v.id")or die (mysqli_error($link));        
+
+
+ $sql= mysqli_query($link,"UPDATE `submissions` SET `fname`='$_POST[firstname]',`lname`='$_POST[lastname]',`email`='$_POST[email]',`linkedin`='$_POST[linkedin]',`position`='$_POST[position]',`branch`='$_POST[branch]',`date`='$curr_date' WHERE `id`=$id " );   
+
+
+  $sql2=mysqli_query($link,"UPDATE `applicant` SET `name`='$_POST[firstname]',`email`='$_POST[email]',`mobile`=$_POST[mobile],`dob`='$_POST[dob]' WHERE `id`=$id");
+
+  $sql3=mysqli_query($link,"UPDATE `background` SET `name`='$_POST[firstname]',`lwc`='$_POST[last_company]',`xp`=$_POST[xp],`skill`='$_POST[skill]' WHERE `id`=$id");
+
+  $sql4=mysqli_query($link,"UPDATE `locate` SET `name`='$_POST[firstname]',`branch`='$_POST[branch]',`position`='$_POST[position]',`mobile`=$_POST[mobile]' WHERE `id`=$id");
+
+  $sql5=mysqli_query($link,"UPDATE `visions` SET `name`='$_POST[firstname]',`vision`='$_POST[vision]',`skills`='$_POST[skill]' WHERE `id`=$id");
+
+ ?>
+ <script type="text/javascript">
+ window.location.href="appview.php";
+ </script>
+ <?php
 
 
 
-?>
-<script type="text/javascript">
-window.location="appview.php";
 
-</script>
-
-<?php
 }
 
 ?>
