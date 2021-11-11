@@ -22,9 +22,6 @@ $curr_date= date("Y-m-d H:i:s"); // time in India
 </head>
 <body>
 
-</head>
-<body>
-
 
 <style>
   @media(max-width:900px){
@@ -77,7 +74,7 @@ $curr_date= date("Y-m-d H:i:s"); // time in India
   <a href="#hold" onclick="ins()">Insert</a>
   </div>
 <form action="" method="post">
-<div class="input-group">
+<div class="input-group" >
     <input type="text" name="value" placeholder="Seach..." class="searc"></input>
    <input type="submit" name="search" value="🔍" class="sicon"></input>
 </div>
@@ -110,7 +107,7 @@ $(document).ready(function(){
 </script>
 
 
-  </div>
+</div>  
   <br><br><br><br>
   
 <style>
@@ -175,7 +172,6 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
     $res = mysqli_query($link, "SELECT * from submissions WHERE fname= '$_POST[value]' ");
     $las = mysqli_query($link, "SELECT * from submissions WHERE lname= '$_POST[value]' ");
     $pos = mysqli_query($link, "SELECT * from submissions WHERE position= '$_POST[value]' ");
-    $eml = mysqli_query($link, "SELECT * from submissions WHERE email like '%$_POST[value]%' ");
     $city = mysqli_query($link, "SELECT * from submissions WHERE branch  like '%$_POST[value]%' ");
 
     // $lwc = mysqli_query($link, "SELECT * from background where lwc like '%$_POST[value]%'");
@@ -231,22 +227,7 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
         echo "</tr>";
         $count= $count+1;
     }
-    while($row=mysqli_fetch_array($eml))
-    {
-        echo "<tr>";
-        echo "<td>"; echo $row["fname"]; echo "</td>";
-        echo "<td>"; echo $row["lname"]; echo "</td>";
-        echo "<td>"; echo $row["email"]; echo "</td>";
-        echo "<td>"; echo $row["linkedin"]; echo "</td>";
-        echo "<td>"; echo $row["position"]; echo "</td>";
-        echo "<td>"; echo $row["branch"]; echo "</td>";
-    
-        echo "<td>"; ?><a href="edit.php?id=<?php echo $row["id"]; ?>"><button type="text/javascript" class="btn btn-success">Edit</button></a> <?php echo "</td>";
-        echo "<td>"; ?><a href="delete.php?id=<?php echo $row["id"]; ?>"><button type="text/javascript" class="btn btn-danger">Delete</button></a> <?php echo "</td>";
-    
-        echo "</tr>";
-        $count= $count+1;
-    }
+
     while($row=mysqli_fetch_array($pos))
     {
         echo "<tr>";
@@ -333,7 +314,7 @@ if(isset($_POST['dsort'])){
   $link = mysqli_connect("localhost", "root" , "") or die (mysqli_error($link));
 mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
 
-  $date = mysqli_query($link, "SELECT * from submissions WHERE `date` BETWEEN  '$_POST[from]' AND '$_POST[to]'  ");
+  $date = mysqli_query($link, "SELECT * from submissions WHERE `date` BETWEEN  '$_POST[from]' AND '$_POST[to]' group by(date) ");
 
   echo "<center>";
   echo "<table class='table' border='5'>
@@ -345,6 +326,7 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
 <th>LinkedIn</th>
 <th>Position</th>
 <th>Branch</th>
+<th>Date</th>
 <th>Edit</th>
 <th>Delete</th>
 </tr>";
@@ -369,7 +351,7 @@ while($row=mysqli_fetch_array($date))
     $count= $count+1;
 }
 echo "<h2>";
-echo   "From " . $_POST['from'] ." To " . $_POST['to'] . " : " . $count . " Entries";
+echo   "From " ."<span style='font-weight:900';>". $_POST['from'] . "</span>"." To " ."<span style='font-weight:900';>"  . $_POST['to'] ."</span>". " : " . $count . " Entries";
 echo "</h2>";
    echo "</table>";
 }
@@ -475,84 +457,11 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
   }    
    ?>
 <br>    
-</div>
+</div></div>
 <br><br>
 
 <div class="col-sm-12" >
   
-<?php
-
-
-$link = mysqli_connect("localhost", "root" , "") or die (mysqli_error($link));
-mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
-$countdev=0;
-$counthr=0;
-$counttst=0;
-
-//     $tdev= mysqli_query($link,"SELECT * FROM submissions WHERE position='developer' ");
-//     $ttst= mysqli_query($link,"SELECT * FROM submissions WHERE position='tester' ");
-//     $thr= mysqli_query($link,"SELECT * FROM submissions WHERE position='hr' ");
-
-//     // $devs=mysqli_fetch_array($tdev);
-//     // $tsts=mysqli_fetch_array($ttst);
-//     // $hrs=mysqli_fetch_array($thr);
-
-//     $dv = mysqli_fetch_array($tdev);
-// echo $dv;
-
-if(isset($_POST['setmax'])){
-$mxdev=$_POST['dev'];
-$mxhr=$_POST['hr'];
-$mxtester=$_POST['test'];
-}
-
-// echo $devs['count(*)'];
-// echo $tsts;
-// echo $hrs;
-
-$query1 = "SELECT `id`  FROM `submissions` where position='developer' ";
-$query2 = "SELECT `id`  FROM `submissions` where position='tester' ";
-$query3 = "SELECT `id`  FROM `submissions` where position='hr' ";
-    
-// Execute the query and store the result set
-$resultdev = mysqli_query($link, $query1);
-$resulttest = mysqli_query($link, $query2);
-$resulthr = mysqli_query($link, $query3);
-
-if ($query1)
-{
-  // it return number of rows in the table.
-  $rowd = mysqli_num_rows($resultdev);
-    
-     if ($rowd)
-        {
-           printf("Number of Developers : " . $rowd);
-           echo "<br>";
-        }
-  // close the result.
-  mysqli_free_result($resultdev);
-
-
-
-}
-if($query2){
-$rowt = mysqli_num_rows($resulttest);
-if($rowt){
-  printf("Number of Testers : " . $rowt);
-  echo "<br>";
-}
-mysqli_free_result($resulttest);
-}
-if($query3){
-$rowh = mysqli_num_rows($resulthr);
-if($rowh){
-  printf("Number of Human Resources : " . $rowh);
-  echo "<br>";
-}
-mysqli_free_result($resulthr);
-}
-
-?>  
 
 <form class="form-row " method="post" action="">
 

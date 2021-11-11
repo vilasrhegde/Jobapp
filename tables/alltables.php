@@ -13,6 +13,8 @@ $link=new mysqli("localhost","root","","jobapp1");
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <link rel="icon" type="image/webp" sizes="32x32"  href="../J.png">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
     <title>View All</title>
 </head>
 <body>
@@ -39,13 +41,14 @@ $link=new mysqli("localhost","root","","jobapp1");
     </thead>
     <tbody>
 <?php
-
-    $res = mysqli_query($link, "SELECT s.fname,s.lname,s.email,s.linkedin,s.position,s.branch,s.relocate,a.dob,b.lwc,b.xp,b.skill,
+$count=0;
+    $res = mysqli_query($link, "SELECT s.id, s.fname,s.lname,s.email,s.linkedin,s.position,s.branch,s.relocate,a.dob,b.lwc,b.xp,b.skill,
     l.mobile,v.vision from submissions s,applicant a,`locate` l,background b,visions v where s.fname=a.name and s.fname=l.name and s.fname=b.name and s.fname=v.name and s.id=a.id;");
     while($row=mysqli_fetch_array($res))
     {
 
         echo "<tr>"; 
+        echo "<td>"; echo $row["id"]; echo "</td>";
         echo "<td>"; echo $row["fname"]; echo "</td>";
         echo "<td>"; echo $row["lname"]; echo "</td>";
         echo "<td>"; echo $row["email"]; echo "</td>";
@@ -61,12 +64,15 @@ $link=new mysqli("localhost","root","","jobapp1");
         echo "<td>"; echo $row["vision"]; echo "</td>";        
     
         echo "</tr>";
+        $count+=1;
      
     }
-
+echo "Total:". $count . " tuples";
 ?>
 
     </tbody>
   </table>
+  
+
 </body>
 </html>

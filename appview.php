@@ -55,7 +55,7 @@ h2{
 <center>
     <br>
 <div class="container">
-  <h2>Get your info</h2>
+  <h2>Get your info</h2><br>
   <form class="form-inline" action="" method="post">
   <div class="form-group">
       <label for="fname">Name:</label>
@@ -138,8 +138,8 @@ if(isset($_POST['submit']))
         echo "<td>"; echo $row["vision"]; echo "</td>"; 
         echo "</tr>";      
 
-        echo "<td>"; ?><a href="viewsome.php?id=<?php echo $row["id"]; ?>"><button type="text/javascript" class="btn btn-success">Edit</button></a> <?php echo "</td>";
-        echo "<td>"; ?><a href="appdelete.php?id=<?php echo $row["id"]; ?>"><button type="text/javascript" class="btn btn-danger">Delete</button></a> <?php echo "</td>";
+        echo "<td>"; ?><a href="viewsome.php?id=<?php echo $row["id"]; ?>"><button type="text/javascript" class="btn btn-success btn-block" style="width: 100%;">Edit</button></a> <?php echo "</td>";
+       
        
        
         echo "</tr>";   

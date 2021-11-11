@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 10, 2021 at 02:55 PM
+-- Generation Time: Nov 11, 2021 at 06:04 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `applicant` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
+  `email` varchar(100) DEFAULT NULL,
   `mobile` int(11) NOT NULL,
   `dob` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -47,7 +47,8 @@ INSERT INTO `applicant` (`id`, `name`, `email`, `mobile`, `dob`) VALUES
 (59, 'suvarna ', 'suvarna@gmail.com', 2147483647, '0000-00-00'),
 (61, 'Sooraj', 'sooraj@gmail.com', 982738927, '2001-02-02'),
 (65, 'Raj', 'raj@gmail.com', 973928737, '1995-12-10'),
-(71, 'Samarth', 'samarht@gmail.com', 2147483647, '0000-00-00');
+(71, 'Samarth', 'samarht@gmail.com', 2147483647, '0000-00-00'),
+(73, 'shamanth', 'shamanth@gmail.com', 739878282, '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -75,7 +76,8 @@ INSERT INTO `background` (`id`, `name`, `lwc`, `xp`, `skill`) VALUES
 (59, 'suvarna ', 'infosys', 2, 'Data entry'),
 (61, 'Sooraj', 'Bosch', 4, 'Server side'),
 (65, 'Raj', 'Microsoft', 3, 'Big data'),
-(71, 'Samarth', 'Google', 5, 'Web deveopment');
+(71, 'Samarth', 'Google', 5, 'Web deveopment'),
+(73, 'shamanth', 'Google', 8, 'Web deveopment');
 
 -- --------------------------------------------------------
 
@@ -103,7 +105,8 @@ INSERT INTO `locate` (`id`, `name`, `branch`, `position`, `mobile`) VALUES
 (59, 'suvarna ', '', 'Data Analytics', 2147483647),
 (61, 'Sooraj', 'Mysore', 'Tester', 982738927),
 (65, 'Raj', 'Bengaluru', 'HR', 973928737),
-(71, 'Samarth', 'Banglore', 'Cybersecurity', 2147483647);
+(71, 'Samarth', 'Banglore', 'Cybersecurity', 2147483647),
+(73, 'shamanth', 'Shimoga', 'Web', 739878282);
 
 -- --------------------------------------------------------
 
@@ -139,7 +142,9 @@ INSERT INTO `submissions` (`id`, `fname`, `lname`, `email`, `linkedin`, `positio
 (61, 'Sooraj', 'Sharma', 'sooraj@gmail.com', 'https://www.linkedin.com/sooraj', 'Tester', 'Mysore', 'Yes', '2021-11-09'),
 (65, 'Raj', 'Kumar', 'raj@gmail.com', 'https://www.linkedin.com/raj', 'HR', 'Bengaluru', 'Yes', '2021-11-09'),
 (71, 'Samarth', 'Bhat', 'samarht@gmail.com', 'https://www.linkedin.com/samarth', 'Cybersecurity', 'Banglore', 'Yes', '2021-11-09'),
-(72, 'Samarth', 'Bhat', 'samarht@gmail.com', 'https://www.linkedin.com/samarth', 'Cybersecurity', 'Banglore', 'Yes', '2021-11-09');
+(72, 'Samarth', 'Bhat', 'samarht@gmail.com', 'https://www.linkedin.com/samarth', 'Cybersecurity', 'Banglore', 'Yes', '2021-11-09'),
+(73, 'shamanth', 'p', 'shamanth@gmail.com', 'https://www.linkedin.com/shami', 'Web', 'Shimoga', 'No', '2021-11-11'),
+(74, 'shamanth', 'p', 'shamanth@gmail.com', 'https://www.linkedin.com/shami', 'Web', 'Shimoga', 'No', '2021-11-11');
 
 -- --------------------------------------------------------
 
@@ -188,7 +193,8 @@ INSERT INTO `visions` (`id`, `name`, `vision`, `skills`) VALUES
 (59, 'suvarna ', 'nothing\r\n\r\n\r\n', 'Data entry'),
 (61, 'Sooraj', 'Booming future', 'Server side'),
 (65, 'Raj', 'No aims', 'Big data'),
-(71, 'Samarth', 'Nothing as of now\r\n', 'Web deveopment');
+(71, 'Samarth', 'Nothing as of now\r\n', 'Web deveopment'),
+(73, 'shamanth', 'sjm,', 'Web deveopment');
 
 -- --------------------------------------------------------
 
@@ -207,7 +213,8 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- Indexes for table `applicant`
 --
 ALTER TABLE `applicant`
-  ADD PRIMARY KEY (`id`,`email`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `email` (`email`);
 
 --
 -- Indexes for table `background`
@@ -241,7 +248,7 @@ ALTER TABLE `visions`
 -- AUTO_INCREMENT for table `submissions`
 --
 ALTER TABLE `submissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- Constraints for dumped tables
