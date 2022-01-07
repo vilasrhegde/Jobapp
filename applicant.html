@@ -24,13 +24,16 @@
       <p style="text-align: center;">Please Complete the form below to Join with us</p>
       
       <hr>
-        <form action="appinsert.php" method="post">
+        <form action="appinsert.php" method="post" enctype="multipart/form-data">
           <!-- <input type="file" name="imageUpload" id="imageUpload"> -->
-
+          <li class="form-row">
+            <label>Photo</label>
+            <input type="file" name="photo" accept="image/x-png,image/gif,image/jpeg" required />
+           </li>
 
              <li class="form-row">
               <label>First Name</label>
-              <input type="text" name="fname" placeholder="Enter your First name" required>
+              <input type="text" name="fname" placeholder="Enter your First name"  pattern="[A-Za-z]+" title="Only alphabets are allowed" required>
              </li>
 
               <li class="form-row">
@@ -46,12 +49,12 @@
 
             <li class="form-row">
               <label>Mobile Number</label>
-              <input type="tel" name="mobile" placeholder="Enter your number" required>
+              <input type="tel" name="mobile" title="Number should be 10 digits" pattern="[1-9]{1}[0-9]{9}" placeholder="Enter your number" required>
           </li>
 
           <li class="form-row">
               <label >Linkedin Profie Link</label>
-              <input type="url" name="linkedin" onblur="checkURL(this);" placeholder="Enter Linkedin link">
+              <input type="url" name="linkedin"  pattern="https?://.+" title="Include http://" placeholder="Enter Linkedin link">
           </li>
           
           <!-- <li class="form-row">
@@ -64,15 +67,19 @@
               <select name="position" id="position" class="col-md-8" >
                 <option style="background-color: #fff;color: #000;" value="" disabled>Choose any</option>
                 <option style="background-color: #fff;color: #000;" value="Data Analytics" >Data Analysis</option>
-                <option style="background-color: #fff;color: #000;" value="Web">Web Development</option>
+                <option style="background-color: #fff;color: #000;" value="Web">Developer</option>
+                <option style="background-color: #fff;color: #000;" value="Cybersecurity" >Testing</option>
                 <option style="background-color: #fff;color: #000;" value="Cybersecurity" >Cybersecurity</option>
+                <option style="background-color: #fff;color: #000;" value="Cybersecurity" >Human Resource</option>
+
+
                 <option style="background-color: #fff;color: #000;" value="Other">Other</option>
               </select>
               </li>
               
               <li class="form-row">
                   <label>Date of Birth</label>
-                  <input type="date" name="bdate" placeholder="Enter Birth Date" required>
+                  <input type="date" name="bdate" placeholder="Enter Birth Date" max="2010-12-31" required>
               </li>
               
           

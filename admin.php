@@ -1,4 +1,5 @@
 <?php
+session_start();
 $name="vilas";
 $password="vilas";
 
@@ -9,18 +10,20 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
 {			
 	if( $aname==$name && $apsw==$password)
     {
+		$_SESSION['status']='Successful';
         header("Location: view.php");
-		// header( "Location: http://localhost/phpmyadmin/index.php?route=/sql&server=1&db=jobapp1&table=submissions&pos=0");
 		die;
 	}
 	else{
-        header("Location: admin.html");
-        echo "Invalid!!!";
+        header("Location: index.html");
 	}
 }
 else{
 	echo "<b>Something went wrong!</b>";
 }
+
+
+
 
 
 ?>

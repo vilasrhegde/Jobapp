@@ -49,6 +49,7 @@ if($res!=""){
 <html lang="en">
 <head>
   <title>Edit</title>
+  <link rel="icon" type="image/webp" sizes="32x32"  href="J.png">   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -66,36 +67,41 @@ if($res!=""){
 <div class="col-md-12">
       <label for="firstname">First Name:</label>
       <input required type="text" class="form-control" id="firstname" placeholder="Enter First name" name="firstname" value="<?php echo
-      $firstname ?>">
+      $firstname ?>"  readonly>
       </div> </div> <br>
       <div class="form-group">
  <div class="col-sm-12">
 
         <label for="lastname">Last Name:</label>
         <input type="text" class="form-control" id="lastname" placeholder="Enter Last name" name="lastname" value="<?php echo
-        $lastname ?>">
+        $lastname ?>" readonly>
       </div>  </div>  <br>
       <div class="form-group">
  <div class="col-sm-12">
 
         <label for="email">Email:</label>
         <input required  type="email" class="form-control" id="email" placeholder="Enter email" name="email" value="<?php echo
-        $email ?>">
+        $email ?>" readonly>
       </div>  </div>  <br>
       <div class="form-group">
  <div class="col-sm-12">
 
         <label for="linkedin">Linkedin:</label>
         <input required  type="url" class="form-control" id="linkedin" placeholder="Enter Linkedin link" name="linkedin" value="<?php echo
-        $linkedin ?>">
+        $linkedin ?>" readonly>
       </div>  </div>  <br>
       <div class="form-group">
  <div class="col-sm-12">
-
-        <label for="position">Position:</label>
-        <input required  type="text" class="form-control" id="posiiton" placeholder="Enter Position" name="position" value="<?php echo
-        $position ?>"></input>
-      </div>  </div>  <br>
+<br>
+ <select name="position" id="position"  class="form-control">
+                <option style="background-color: #fff;color: #000;" value="" disabled>Choose any</option>
+                <option style="background-color: #fff;color: #000;" value="Data Analytics" >Data Analysis</option>
+                <option style="background-color: #fff;color: #000;" value="Web">Web Development</option>
+                <option style="background-color: #fff;color: #000;" value="Cybersecurity" >Cybersecurity</option>
+                <option style="background-color: #fff;color: #000;" value="Other">Other</option>
+              </select>
+ </div>
+      </div>  <br>
       <div class="form-group">
  <div class="col-sm-12">
  <label for="branch">Branch name:</label>
@@ -103,31 +109,30 @@ if($res!=""){
         $branch ?>">
       </div>  </div>  <br>
       <div class="form-group">
- <div class="col-sm-12">
- <div class="form-group">
        <div class="col-sm-12">
              <label for="mobile">Mobile:</label>
         <input required  type="tel" class="form-control"  placeholder="Mobile" name="mobile" value="<?php echo
-        $mobile ?>">
+        $mobile ?>" readonly>
       </div>  </div>  <br>
-
+      <div class="form-group">
+       <div class="col-sm-12">
         <label for="dob">Birth date:</label>
         <input required  type="date" class="form-control"  placeholder="Birth date" name="dob" value="<?php echo
-        $dob ?>">
+        $dob ?>" readonly>
       </div>   </div> <br>
     
       <div class="form-group">
  <div class="col-sm-12">
         <label for="last_company">Last Company:</label>
         <input required  type="text" class="form-control"  placeholder="Last company" name="last_company" value="<?php echo
-        $lastcompany ?>">
+        $lastcompany ?>" readonly>
       </div> </div>
       <div class="form-group">
            <div class="col-md-12">
 
         <label for="xp">Experience:</label>
         <input required  type="number" class="form-control"  placeholder="Field Experience" name="xp" value="<?php echo
-        $xp ?>">
+        $xp ?>" readonly>
       </div>
       </div>
       <div class="form-group">
@@ -144,7 +149,7 @@ if($res!=""){
 
         <label for="vision">Visions:</label>
         <input required  type="text" class="form-control"  placeholder="Visions" name="vision" value="<?php echo
-        $vision ?>">
+        $vision ?>" readonly>
       </div>
       </div>
    <div class="form-group">
@@ -182,16 +187,14 @@ if(isset($_POST["update"]))
 // where s.id=$id and  s.fname= '$_POST[firstname]' and s.fname= a.name= l.name= b.name=v.name and s.id=a.id=l.id=b.id=v.id")or die (mysqli_error($link));        
 
 
- $sql= mysqli_query($link,"UPDATE `submissions` SET `fname`='$_POST[firstname]',`lname`='$_POST[lastname]',`email`='$_POST[email]',`linkedin`='$_POST[linkedin]',`position`='$_POST[position]',`branch`='$_POST[branch]',`date`='$curr_date' WHERE `id`=$id " );   
 
+ $sql= mysqli_query($link,"UPDATE `submissions` SET `position`='$_POST[position]',`branch`='$_POST[branch]',`date`='$curr_date' WHERE `id`=$id " );   
 
-  $sql2=mysqli_query($link,"UPDATE `applicant` SET `name`='$_POST[firstname]',`email`='$_POST[email]',`mobile`=$_POST[mobile],`dob`='$_POST[dob]' WHERE `id`=$id");
+  $sql3=mysqli_query($link,"UPDATE `background` SET `skill`='$_POST[skill]' WHERE `id`=$id");
 
-  $sql3=mysqli_query($link,"UPDATE `background` SET `name`='$_POST[firstname]',`lwc`='$_POST[last_company]',`xp`=$_POST[xp],`skill`='$_POST[skill]' WHERE `id`=$id");
+  $sql4=mysqli_query($link,"UPDATE `locate` SET `branch`='$_POST[branch]',`position`='$_POST[position]' WHERE `id`=$id");
 
-  $sql4=mysqli_query($link,"UPDATE `locate` SET `name`='$_POST[firstname]',`branch`='$_POST[branch]',`position`='$_POST[position]',`mobile`=$_POST[mobile]' WHERE `id`=$id");
-
-  $sql5=mysqli_query($link,"UPDATE `visions` SET `name`='$_POST[firstname]',`vision`='$_POST[vision]',`skills`='$_POST[skill]' WHERE `id`=$id");
+  $sql5=mysqli_query($link,"UPDATE `visions` SET `skills`='$_POST[skill]' WHERE `id`=$id");
 
  ?>
  <script type="text/javascript">

@@ -1,5 +1,17 @@
 
 <?php
+session_start();
+
+
+if($_SESSION['status']=='Successful'){
+  // echo "<script>alert('Logged in!')</script>";
+  echo "";
+}
+else{
+  header("Location: index.html");
+}
+
+
 $link = mysqli_connect("localhost", "root" , "") or die (mysqli_error($link));
 mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
 
@@ -171,7 +183,7 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
 
     $res = mysqli_query($link, "SELECT * from submissions WHERE fname= '$_POST[value]' ");
     $las = mysqli_query($link, "SELECT * from submissions WHERE lname= '$_POST[value]' ");
-    $pos = mysqli_query($link, "SELECT * from submissions WHERE position= '$_POST[value]' ");
+    $pos = mysqli_query($link, "SELECT * from submissions WHERE position like '%$_POST[value]%' ");
     $city = mysqli_query($link, "SELECT * from submissions WHERE branch  like '%$_POST[value]%' ");
 
     // $lwc = mysqli_query($link, "SELECT * from background where lwc like '%$_POST[value]%'");
@@ -199,7 +211,7 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
     {
         echo "<tr>";
         echo "<td>"; echo $row["fname"]; echo "</td>";
-        echo "<td>"; echo $row["lname"]; echo "</td>";
+        echo "<td>"; echo $row["lname"]; echo "</td>";  
         echo "<td>"; echo $row["email"]; echo "</td>";
         echo "<td>"; echo $row["linkedin"]; echo "</td>";
         echo "<td>"; echo $row["position"]; echo "</td>";
@@ -264,7 +276,7 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
     
 
     
-  }//if
+  }//if search
 
 
 
@@ -276,11 +288,11 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
 
 <div id="pg1" class="col-md-12 text-center">
 <form action="" method="post">
-  <h2>Sort by Creation Date</h2>
+  <h2>Sort by Applied Date</h2>
   <label class="mx-3" for="from">From:</label>
   <input style="padding: 5px;border-radius:5px;" id="from" type="date" name="from" placeholder="Date from">
   <label style="margin-left:25px;" for="to">To:</label>
-  <input style="padding: 5px;border-radius:5px;" id="to" type="date"  name="to" placeholder="Date To">
+  <input style="padding: 5px;border-radius:5px;" id="to" type="date"  name="to"  placeholder="Date To">
   <input class="p-2 rounded mx-5" style="padding:  5px;margin-left:10px;background:#222; color:#fff" type="submit"  class="mx-3" name="dsort" value="Submit">
 </form>
 <hr>
@@ -459,7 +471,18 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
 <br>    
 </div></div>
 <br><br>
+<?php
 
+$fetchmax=mysqli_query($link,"SELECT * from recruit where id =1");
+while($row=mysqli_fetch_array($fetchmax)){
+  $mxdv=$row['dev'];
+  $mhr=$row['hr'];
+  $mxtest=$row['test'];
+  $support=$row['support'];
+}
+
+$totalneed=$mxdv + $mhr + $mxtest + $support;
+?>
 <div class="col-sm-12" >
   
 
@@ -470,25 +493,43 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
 
       <label class="col-sm-12 control-label">For Developer</label>
       <div class="col-sm-12">   
-        <input class="form-control center" id="dev" type="number" value="" name="dev" placeholder="Developers" >
+        <input class="form-control center" id="dev" type="number"  name="dev" value="<?php echo $mxdv; ?>" >
       </div>
 
     <div class="form-group">  
       <label class="col-sm-12 control-label">For Human Resources</label>
       <div class="col-sm-12">   
-        <input class="form-control" id="hr" type="number" value="" name="hr" placeholder="Human Resources" >
+        <input class="form-control" id="hr" type="number"  name="hr" value="<?php echo $mhr; ?>" >
       </div>
 
     <div class="form-group">  
       <label class="col-sm-12 control-label">For Testers</label>
       <div class="col-sm-12">   
-        <input class="form-control" id="test" type="number" value="" name="test" placeholder="Testers" >
+        <input class="form-control" id="test" type="number"  name="test" value="<?php echo $mxtest; ?>" >
         <br><br>
       </div>
     </div>
     <input type="submit" name="setmax" style="width: 100%;background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);" class="btn btn-primary btn-lg btn-block"   />
 </form>
 </div>
+<?php
+if(isset($_POST['setmax'])){
+  $mxdev=$_POST['dev'];
+  $mxhr=$_POST['hr'];
+  $mxtester=$_POST['test'];
+
+  $set= mysqli_query($link, "UPDATE `recruit` SET `dev`='$mxdev',`test`='$mxtester',`hr`='$mxhr' WHERE id=1");
+
+  ?>
+<script>
+  window.location.href="view.php";
+  </script>
+<?php
+}
+?>
+
+
+
 <div class="hold" id="hold">
 
 <div  class="container col-sm-12"  >
@@ -544,11 +585,11 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
         <input type="text" class="form-control" name="lwc" id="last_company" placeholder="Last company" >
       </div></div>
       <div class="form-group">
-      <label class="col-sm-12 control-label" >Are you willing to relocate?</label>
+      <label class="col-sm-12 control-label" for="rel" >Are you willing to relocate?</label>
       <div class="col-sm-12">
-  <input type="radio" name="relocate" value="Yes"> Yes </label>
-                    <input type="radio" aria-selected="true" name="relocate" value="No"> No 
-                      <input type="radio" name="relocate" aria-selected="true" value="Notsure"> Not Sure 
+  <input type="radio" name="relocate" value="Yes"   class="form-control-row"  id="rel"> Yes </label>
+                    <input type="radio" aria-selected="true" id="rel"  class="form-control-row"  name="relocate" value="No"> No 
+                      <input type="radio" name="relocate" id="rel"  class="form-control-row"  aria-selected="true" value="Notsure"> Not Sure 
       </div>     
       </div>
     </div>
@@ -568,10 +609,9 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
       <label class="col-sm-12 control-label" for="vision">Visions</label>
       <div class="col-sm-12">
         <input type="textarea" class="form-control" name="vision" id="vision" placeholder="Any aims" >
-        <br><br>
       </div>
     </div>
-    <input type="submit" name="insert" style="width: 100%;background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);margin:10% 0;" class="btn btn-primary btn-lg btn-block"   />
+    <input type="submit" name="insert" style="width: 100%;background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);margin:10px 0;" class="btn btn-primary btn-lg btn-block"   />
   
   </form>
 </div>
@@ -677,10 +717,13 @@ h2{
 
 
 <div class="container" id="bottom">
+  <?php
+   
+  ?>
   <h2>Total Recruitment:</h2>
   <p></p> 
   <div class="progress">
-    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="<?php echo $count; ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $count;?>% ">
+    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="<?php echo $count; ?>" aria-valuemin="0" aria-valuemax="<?php echo $totalneed; ?>" style="width:<?php echo $count;?>% ">
       <?php echo $count;?>
     </div>
   </div>
@@ -795,7 +838,7 @@ if(isset($_POST["insert"]))
 $link -> close();
  ?>
  <script type="text/javascript">
- window.location.href=window.location.href;
+ window.location.href='view.php';
  </script>
  <?php
 
@@ -832,11 +875,7 @@ window.location.href=window.location.href;
 <?php
 }
 
-if(isset($_POST['setmax'])){
-  $mxdev=$_POST['dev'];
-  $mxhr=$_POST['hr'];
-  $mxtester=$_POST['test'];
-}
+
 ?>
 
 
