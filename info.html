@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/webp" sizes="32x32"  href="J.png">  
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank you!</title>
+</head>
+<body style="background: #fff;display: flex;justify-content: center;align-items: center;padding: 20% 3%;">
+    <section>
+
+        <center>
+            <h1>You have Registered Successfully!</h1>
+            <br>
+            <h3 style="font-weight: 500;">We will be in touch with you from now on. Stay tuned.</h3>
+            <br>
+            <a id="status" href="appview.php">Status</a>
+            <br>
+            <br>
+          
+
+        </center>
+        <a href="index.html" id="home">Home</a>   
+    </section>
+<style>
+    section{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    #home{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;bottom: 0;
+        right: 0;
+        width: 200px;height: 200px;border-radius: 50% 0% 0 0;background: #222;
+        font-size: 30px;font-weight: 900;text-shadow: 0 7 px 5px rgba(0, 0, 0, 0.308);letter-spacing: 10px;
+        transition: .5s;
+    }
+    #home:hover{
+        letter-spacing: 2px;
+    }
+    #status{
+   position: relative;
+   background-color: #222;
+   padding: 5px 30px
+    }
+    @media(max-width:900px){
+        #home{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        margin: 35% auto;
+        width: 200px;height: 100px;border-radius: 10px;background: #222;
+        font-size: 25px;font-weight: 900;text-shadow: 0 7 px 5px rgba(0, 0, 0, 0.308);letter-spacing: 10px;
+        transition: .5s;
+    }
+    }
+    
+</style>
+</body>
+</html>

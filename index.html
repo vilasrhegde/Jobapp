@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" type="image/webp" sizes="32x32"  href="J.png">     
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <div class="container">
+        <div class="admin" onclick="admin()" ondblclick="hide()"><h1>Admin</h1>
+            <div class="frm" id="form">
+
+
+                <form action="admin.php" method="post" >
+                    <h2 class="center" >Login</h2>
+                    <li class="form-row">
+                        <input type="text" name="user" placeholder="username">
+                    </li>
+                    <li class="form-row">
+                        <input type="password" name="psw" placeholder="password">
+                    </li>
+                    <div class="center">
+                        <input class="button" type="submit" value="Submit" >
+                    </div>
+                </form>
+                
+        
+            </div>
+        
+        </div>
+        <div class="app" onclick="applicant()" onclick="hide()"><a href="applicant.html"><h1>Applicant</h1></a></div>
+    </div>
+
+
+    <style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins',sans-serif;
+}
+        body{
+            /* background-image: linear-gradient(to right, #eea2a2 0%, #bbc1bf 19%, #57c6e1 42%, #b49fda 79%, #7ac5d8 100%);        */
+            user-select: none; 
+        }
+        h2{
+            font-size: 30px;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
+        }
+        .frm{
+            display: none;
+            transition: 0.5s;
+            position: absolute;
+            box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.5);
+        }
+        form{
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            padding: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        input{
+            padding: 5px;
+        }
+        .button{
+            background: #000;
+            color: #fff;
+            padding: 10px;
+            outline: none;
+            border: none;
+        }
+        .form-row{
+            padding: 5px;
+            margin: 10px;
+        }
+        li{
+            list-style: none;
+        }
+        .container{
+            display: flex;
+        }
+        .admin{
+            position: absolute;
+            width: 40%;
+            min-height: 100vh;
+            left: 0;
+            background: #fff;
+            color: #000;
+            display: flex;
+            align-items: center;justify-content: center;
+            transition: 1.0s ease-in-out;
+        }
+        .admin:hover{
+            width: 80%;
+            left: 0;
+            z-index: 1;         transition: 1.0s ease-in-out;
+            
+        }
+        .app:hover{
+            width: 80%;
+            transition: 1.0s ease-in-out;   
+        }
+        .app{
+            position: absolute;
+            width: 60%;
+            min-height: 100vh;
+            right: 0;
+            background: #000;
+            color: #fff;
+            display: flex;
+            align-items: center;justify-content: center;
+            transition: 1.0s ease-in-out;
+        }
+        a{
+            text-decoration: none;
+        }
+        .app h1{
+            color: #fff;
+            font-size: 50px;
+            text-shadow: 0 7px 5px rgba(255, 255, 255, 0.5);
+            font-weight: 800;
+            text-decoration: none;
+        }
+        .admin h1{
+            color: #000;
+            font-size: 50px;
+            text-shadow: 0 7px 5px rgba(0, 0, 0, 0.5);
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+       
+        @media(max-width:500px){
+            .container{
+            display: flex;
+        }
+        form{
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .admin{
+            position: absolute;
+            width: 100%;
+            min-height: 30vh;
+            left: 0;
+            background: #fff;
+            color: #000;
+            display: flex;
+            align-items: center;justify-content: center;
+            transition: .4s;
+        }
+        .admin:hover{
+            width: 100%;
+            min-height: 70vh;
+            left: 0;
+            z-index: 1;
+            
+        }
+        .app:hover{
+            width: 100%;
+        }
+        .app{
+            position: absolute;
+            width: 100%;
+            min-height: 70vh;
+            bottom: 0;
+            background: #000;
+            color: #fff;
+            display: flex;
+            align-items: center;justify-content: center;
+            transition: .4s;
+            
+        }
+        .app a{
+            color: #fff;
+            font-size: 20px;
+            font-weight: 800;
+            text-decoration: none;
+        }
+        .admin a{
+            color: #000;
+            font-size: 20px;
+            font-weight: 800;
+            text-decoration: none;
+        }
+        }
+    </style>
+    <script>
+        function admin(){
+            document.getElementById('form').style.display="block";
+        }
+        function hide(){
+            document.getElementById('form').style.display="none";
+        }
+        function applicant(){
+            window.location.href="applicant.html";
+        }
+    </script>
+
+
+
+<!-- <h2>JavaScript Prompt</h2>
+
+<button onclick="myFunction()">Try it</button>
+
+<p id="demo"></p>
+
+<script>
+function myFunction() {
+  let text;
+  let person = prompt("Please enter your name:", "Harry Potter");
+  if (person == null || person == "") {
+    text = "User cancelled the prompt.";
+  } else {
+    text = "Hello " + person + "! How are you today?";
+  }
+  document.getElementById("demo").innerHTML = text;
+}
+</script> -->
+
+</body>
+</html>
