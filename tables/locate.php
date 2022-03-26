@@ -1,5 +1,5 @@
 <?php
-$link=new mysqli("localhost","root","","jobapp1");
+include '../connection.php';
 $lccount= 0;
 $qlocate= mysqli_query($link, "SELECT * from `locate` ");
 

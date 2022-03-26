@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 17, 2021 at 02:09 PM
+-- Generation Time: Mar 18, 2022 at 05:23 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -21,6 +21,14 @@ SET time_zone = "+00:00";
 -- Database: `jobapp1`
 --
 
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_today_submissions` (INOUT `today's` INT)  SELECT * from submissions WHERE date=DATE(NOW())$$
+
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -28,34 +36,36 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `applicant` (
-  `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `email` varchar(100) DEFAULT NULL,
-  `mobile` int(20) NOT NULL,
-  `dob` date NOT NULL DEFAULT current_timestamp()
+  `app_id` int(11) NOT NULL,
+  `photo` varchar(500) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `mob` varchar(10) NOT NULL,
+  `dob` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `applicant`
 --
 
-INSERT INTO `applicant` (`id`, `name`, `email`, `mobile`, `dob`) VALUES
-(52, 'Surya K', 'surya@gmail.com', 2147483647, '2021-11-09'),
-(55, 'Bhavish', 'bhavish@gmail.com', 2147483647, '2021-11-09'),
-(57, 'Suchitra P', 'suchitra@gmail.com', 2147483647, '2021-11-09'),
-(59, 'suvarna ', 'suvarna@gmail.com', 2147483647, '0000-00-00'),
-(61, 'Sooraj', 'sooraj@gmail.com', 982738927, '2001-02-02'),
-(65, 'Raj', 'raj@gmail.com', 973928737, '1995-12-10'),
-(71, 'Samarth', 'samarht@gmail.com', 2147483647, '0000-00-00'),
-(73, 'shamanth', 'shamanth@gmail.com', 739878282, '0000-00-00'),
-(75, 'Alex', 'alex@gmail.com', 965656588, '2000-04-26'),
-(78, 'Amith', 'amith@gmail.com', 978374873, '0000-00-00'),
-(79, 'Vilas', 'vilasrhegde@gmail.com', 778742376, '0000-00-00'),
-(80, 'Karthik', 'karhik@gmail.com', 993378787, '0000-00-00'),
-(81, 'Omkar', 'omi@gmail.com', 2147483647, '0000-00-00'),
-(82, 'Akhila', 'akhila@gmail.com', 993747477, '1989-06-30'),
-(83, 'Mallika', 'mallika@gmail.com', 973748099, '1977-10-20'),
-(84, 'Imad', 'imad@gmail.com', 974837473, '2021-12-11');
+INSERT INTO `applicant` (`app_id`, `photo`, `name`, `email`, `mob`, `dob`) VALUES
+(4, 'vilas hegde-1.jpg', 'Vilas', 'vilasrhegde@gmail.com', '2147483647', '2001-05-23'),
+(6, 'DSC_0127.jpg', 'Tushar', 'test@gmail.com', '2147483647', '2000-03-12'),
+(8, 'CRS_2480 (1)-modified.png', 'Sujna', 'sujna@gmail.com', '2147483647', '1998-07-17'),
+(9, './images/715b7c57643210db8fa8e2d131a8d84bCRS_2480 (1)-modified-min.png', 'Hema', 'hema@gmail.com', '2147483647', '1986-05-01'),
+(13, './images/9099d9b7273fc5c9200001a1131f57a9DSC_0108.JPG', 'Sushmitha', 'sushmitha@gmail.com', '2147483647', '1992-04-12'),
+(14, './images/628dde3e3319a38a45039ff820e7bf60girl2.jpg', 'Aesha', 'aesha@gmail.com', '2147483647', '1991-07-12'),
+(15, './images/491e18865b9aa4f9c76af9b0449cdd5egirl2.jpg', 'Varsha', 'varsha@gmail.com', '2147483647', '1997-02-12'),
+(16, './images/d15923576314b5c0379a2d9f69bbe5a3girl4.jpg', 'Suahana', 'suhana@gmail.com', '9873874387', '1999-02-09'),
+(17, './images/794d8cc7e63a32b0ebe53de6953bb732Untitled design (1).png', 'Romi', 'romi@gmail.com', '9473874837', '1999-06-07');
+
+--
+-- Triggers `applicant`
+--
+DELIMITER $$
+CREATE TRIGGER `insert_log` AFTER INSERT ON `applicant` FOR EACH ROW INSERT into insert_log SET app_id=NEW.app_id,name=NEW.name,photo=NEW.photo,mobile=NEW.mob
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -76,22 +86,60 @@ CREATE TABLE `background` (
 --
 
 INSERT INTO `background` (`id`, `name`, `lwc`, `xp`, `skill`) VALUES
-(52, 'Surya K', 'infosys', 2, 'Data entry'),
-(55, 'Bhavish', 'Zerodha', 2, 'Testing'),
-(57, 'Suchitra P', 'infosys', 2, 'Data entry'),
-(59, 'suvarna ', 'infosys', 2, 'Data entry'),
-(61, 'Sooraj', 'Bosch', 4, 'Server side'),
-(65, 'Raj', 'Microsoft', 3, 'Big data'),
-(71, 'Samarth', 'Google', 5, 'Web deveopment'),
-(73, 'shamanth', 'Google', 8, 'Web deveopment'),
-(75, 'Alex', 'Bosch', 2, 'Web design'),
-(78, 'Amith', 'HCL', 2, 'Competitive programming'),
-(79, 'Vilas', 'Fresher', 0, 'Web design'),
-(80, 'Karthik', 'Fresher', 0, 'Data Analysis'),
-(81, 'Omkar', 'TCS', 12, 'Big data'),
-(82, 'Akhila', 'Servian', 13, 'Data Analysis'),
-(83, 'Mallika', 'Accenture', 13, 'Big data'),
-(84, 'Imad', 'MS Azure', 7, 'SQL');
+(4, 'Vilas', 'Google', 2, 'Data Analysis'),
+(6, 'Tushar', 'HCL', 1, 'Competitive programming'),
+(8, 'Sujna', 'Fresher', 0, 'Competitive programming'),
+(9, 'Hema', 'Google', 2, 'Competitive programming'),
+(13, 'Sushmitha', 'Bosch', 5, 'Communication'),
+(14, 'Aesha', 'HCL', 7, 'Ethical hacking'),
+(15, 'Varsha', 'Fresher', 0, 'Web design'),
+(16, 'Suahana', 'Apple', 3, 'Marketing'),
+(17, 'Romi', 'HCL', 3, 'SQL');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `delete_log`
+--
+
+CREATE TABLE `delete_log` (
+  `id` int(11) NOT NULL,
+  `app_id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `position` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `delete_log`
+--
+
+INSERT INTO `delete_log` (`id`, `app_id`, `name`, `position`, `email`, `date`) VALUES
+(0, 5, 'Bharath', 'Cybersecurity', 'vilasrhegde@gmail.co', '2022-01-06');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `insert_log`
+--
+
+CREATE TABLE `insert_log` (
+  `app_id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `photo` varchar(500) NOT NULL,
+  `mobile` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `insert_log`
+--
+
+INSERT INTO `insert_log` (`app_id`, `name`, `photo`, `mobile`) VALUES
+(14, 'Aesha', './images/628dde3e3319a38a45039ff820e7bf60girl2.jpg', '2147483647'),
+(15, 'Varsha', './images/491e18865b9aa4f9c76af9b0449cdd5egirl2.jpg', '2147483647'),
+(16, 'Suahana', './images/d15923576314b5c0379a2d9f69bbe5a3girl4.jpg', '2147483647'),
+(17, 'Romi', './images/794d8cc7e63a32b0ebe53de6953bb732Untitled design (1).png', '9473874837');
 
 -- --------------------------------------------------------
 
@@ -104,7 +152,7 @@ CREATE TABLE `locate` (
   `name` varchar(100) NOT NULL,
   `branch` varchar(100) NOT NULL,
   `position` varchar(100) NOT NULL,
-  `mobile` int(11) NOT NULL
+  `mobile` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -112,22 +160,23 @@ CREATE TABLE `locate` (
 --
 
 INSERT INTO `locate` (`id`, `name`, `branch`, `position`, `mobile`) VALUES
-(52, 'Surya', 'Manglore', 'Developer', 65643554),
-(55, 'Bhavish', 'Banglore', 'Tester', 2147483647),
-(57, 'Suchitra', 'Pune', 'Web', 2147483647),
-(59, 'suvarna ', '', 'Data Analytics', 2147483647),
-(61, 'Sooraj', 'Mysore', 'Tester', 982738927),
-(65, 'Raj', 'Bengaluru', 'HR', 973928737),
-(71, 'Samarth', 'Banglore', 'Cybersecurity', 2147483647),
-(73, 'shamanth', 'Shimoga', 'Web', 739878282),
-(75, 'Alex', 'CHITTAPUR', 'Web', 965656588),
-(78, 'Amith', 'Shimoga', 'Web', 978374873),
-(79, 'Vilas', 'Sirsi', 'Web', 778742376),
-(80, 'Karthik', 'Tumkur', 'Cybersecurity', 993378787),
-(81, 'Omkar', 'Belgavi', 'Cybersecurity', 2147483647),
-(82, 'Akhila', 'Pune', 'Data Analytics', 993747477),
-(83, 'Mallika', 'Tumkur', 'Web developer', 973748099),
-(84, 'Imad', 'Hulekal', 'Web', 974837473);
+(4, 'Vilas', 'Banglore', 'Data Analytics', '2147483647'),
+(6, 'Tushar', 'Shimoga', 'Cybersecurity', '2147483647'),
+(8, 'Sujna', 'Sirsi', 'Web', '2147483647'),
+(9, 'Hema', 'Jaipur', 'Web', '2147483647'),
+(13, 'Sushmitha', 'Chikmanglore', 'Data Analytics', '2147483647'),
+(14, 'Aesha', 'Delhi', 'Cybersecurity', '2147483647'),
+(15, 'Varsha', 'Banglore', 'Web', '2147483647'),
+(16, 'Suahana', 'Trivendrum', 'Tester', '9873874387'),
+(17, 'Romi', 'Tumkur', 'Web', '9473874837');
+
+--
+-- Triggers `locate`
+--
+DELIMITER $$
+CREATE TRIGGER `update_info` BEFORE UPDATE ON `locate` FOR EACH ROW INSERT into update_log SET name=OLD.name,position=OLD.position,app_id=OLD.id,city=OLD.branch
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -148,7 +197,7 @@ CREATE TABLE `recruit` (
 --
 
 INSERT INTO `recruit` (`id`, `dev`, `test`, `hr`, `support`) VALUES
-(1, 250, 450, 344, 350);
+(1, 250, 100, 50, 350);
 
 -- --------------------------------------------------------
 
@@ -173,25 +222,23 @@ CREATE TABLE `submissions` (
 --
 
 INSERT INTO `submissions` (`id`, `fname`, `lname`, `email`, `linkedin`, `position`, `branch`, `relocate`, `date`) VALUES
-(44, 'Thenasa', 'Therous', 'thena@gmail.com', 'https://www.linkedin.com/thena', 'Developer', 'Eros', 'No', '2021-11-07'),
-(52, 'Surya K', 'Bhat', 'surya@gmail.com', 'https://www.linkedin.com/surya', 'Developer', 'Manglore', '', '2021-11-09'),
-(55, 'Bhavish', 'Samanii', 'bhavish@gmail.com', 'http://https://github.com/ishanpatel27/Job-Application-Assignment', 'Tester', 'Banglore', 'No', '2021-11-09'),
-(57, 'Suchitra P', 'Salaga', 'suchitra@gmail.com', 'https://www.linkedin.com/suchi', 'Web', 'Pune', 'Yes', '2021-11-09'),
-(58, 'Suchitra', 'Salaga', 'suchitra@gmail.com', 'https://www.linkedin.com/suchi', 'Web', 'Pune', 'Yes', '2021-11-08'),
-(59, 'suvarna ', 'sunugar', 'suvarna@gmail.com', 'https://www.linkedin.com/suvu', 'Data Analytics', '', 'Yes', '2021-11-08'),
-(61, 'Sooraj', 'Sharma', 'sooraj@gmail.com', 'https://www.linkedin.com/sooraj', 'Tester', 'Mysore', 'Yes', '2021-11-09'),
-(65, 'Raj', 'Kumar', 'raj@gmail.com', 'https://www.linkedin.com/raj', 'HR', 'Bengaluru', 'Yes', '2021-11-09'),
-(71, 'Samarth', 'Bhat', 'samarht@gmail.com', 'https://www.linkedin.com/samarth', 'Cybersecurity', 'Banglore', 'Yes', '2021-11-09'),
-(73, 'shamanth', 'p', 'shamanth@gmail.com', 'https://www.linkedin.com/shami', 'Web', 'Shimoga', 'No', '2021-11-11'),
-(75, 'Alex', 'Aris', 'alex@gmail.com', 'https://linkedin.com/alex', 'Web', 'CHITTAPUR', 'No', '2021-11-22'),
-(77, 'Tushar', 'Belpu', 'tushar@gmail.com', 'https://linkedin.com/tushar', 'Web', 'Banglore', 'No', '2021-11-30'),
-(78, 'Amith', 'K', 'amith@gmail.com', 'https://linkedin.com/amith', 'Web', 'Shimoga', 'No', '2021-11-30'),
-(79, 'Vilas', 'Hegde', 'vilasrhegde@gmail.com', 'http://kedin.com/in/vilas-hegde-1a2796197/', 'Web', 'Sirsi', 'Yes', '2021-11-30'),
-(80, 'Karthik', 'MC', 'karhik@gmail.com', 'http://kedin.com/in/karthik', 'Cybersecurity', 'Tumkur', 'Notsure', '2021-11-30'),
-(81, 'Omkar', 'Devarmani', 'omi@gmail.com', 'https://linkedin.com/omkar', 'Cybersecurity', 'Belgavi', 'Yes', '2021-11-30'),
-(82, 'Akhila', 'Vardhan', 'akhila@gmail.com', 'https://linkedin.com/akhila', 'Data Analytics', 'Pune', 'No', '2021-11-30'),
-(83, 'Mallika', 'Naik', 'mallika@gmail.com', 'https://linkedin.com/mallika', 'Web developer', 'Tumkur', 'Yes', '2021-11-30'),
-(84, 'Imad', 'Abdhul', 'imad@gmail.com', 'https://linkedin.com/imad', 'Web', 'Hulekal', 'Yes', '2021-12-11');
+(4, 'Vilas', 'Hegde', 'vilasrhegde@gmail.com', 'http://kedin.com/in/vilasrhegde', 'Data Analytics', 'Banglore', 'Yes', '2022-01-06'),
+(6, 'Tushar', 'Belpu', 'test@gmail.com', 'https://linkedin.com/tushar', 'Cybersecurity', 'Shimoga', 'No', '2022-01-06'),
+(8, 'Sujna', 'Gaonkar', 'sujna@gmail.com', 'https://linkedin.com/sujna', 'Web developer', 'Sirsi', 'Yes', '2022-01-06'),
+(9, 'Hema', 'Kapoor', 'hema@gmail.com', 'https://linkedin.com/hema', 'Web developer', 'Jaipur', 'Yes', '2022-01-12'),
+(13, 'Sushmitha', 'Raj', 'sushmitha@gmail.com', 'https://linkedin.com/sushmitharaj', 'Tester', 'Chikmanglore', 'Yes', '2022-01-15'),
+(14, 'Aesha', 'Khan', 'aesha@gmail.com', 'https://linkedin.com/aesha', 'HR', 'Delhi', 'Yes', '2022-01-15'),
+(15, 'Varsha', 'Hegde', 'varsha@gmail.com', 'https://linkedin.com/varsha', 'Web', 'Banglore', 'Yes', '2022-01-15'),
+(16, 'Suahana', 'Sharma', 'suhana@gmail.com', 'https://linkedin.com/suhana', 'Tester', 'Trivendrum', 'No', '2022-01-15'),
+(17, 'Romi', 'Raza', 'romi@gmail.com', 'https://linkedin.com/romi', 'Web', 'Tumkur', 'Yes', '2022-03-12');
+
+--
+-- Triggers `submissions`
+--
+DELIMITER $$
+CREATE TRIGGER `delete_data` BEFORE DELETE ON `submissions` FOR EACH ROW INSERT into delete_log SET name=OLD.fname,position=OLD.position,email=OLD.email,app_id=OLD.id,date=OLD.date
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -200,7 +247,9 @@ INSERT INTO `submissions` (`id`, `fname`, `lname`, `email`, `linkedin`, `positio
 -- (See below for the actual view)
 --
 CREATE TABLE `total` (
-`fname` varchar(100)
+`id` int(11)
+,`fname` varchar(100)
+,`photo` varchar(500)
 ,`lname` varchar(100)
 ,`email` varchar(100)
 ,`linkedin` varchar(100)
@@ -211,9 +260,29 @@ CREATE TABLE `total` (
 ,`lwc` varchar(100)
 ,`xp` int(11)
 ,`skill` varchar(100)
-,`mobile` int(11)
+,`mobile` varchar(10)
 ,`vision` text
 );
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `update_log`
+--
+
+CREATE TABLE `update_log` (
+  `app_id` int(11) NOT NULL,
+  `position` varchar(50) NOT NULL,
+  `city` varchar(50) NOT NULL,
+  `Name` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `update_log`
+--
+
+INSERT INTO `update_log` (`app_id`, `position`, `city`, `Name`) VALUES
+(13, 'Web', 'Chikmanglore', 'Sushmitha');
 
 -- --------------------------------------------------------
 
@@ -233,22 +302,15 @@ CREATE TABLE `visions` (
 --
 
 INSERT INTO `visions` (`id`, `name`, `vision`, `skills`) VALUES
-(52, 'Surya K', 'Many things', 'Data entry'),
-(55, 'Bhavish', 'nothing', 'Testing'),
-(57, 'Suchitra P', 'nothing', 'Data entry'),
-(59, 'suvarna ', 'nothing\r\n\r\n\r\n', 'Data entry'),
-(61, 'Sooraj', 'Booming future', 'Server side'),
-(65, 'Raj', 'No aims', 'Big data'),
-(71, 'Samarth', 'Nothing as of now\r\n', 'Web deveopment'),
-(73, 'shamanth', 'sjm,', 'Web deveopment'),
-(75, 'Alex', 'Boom', 'Web design'),
-(78, 'Amith', 'Nothing', 'Competitive programming'),
-(79, 'Vilas', 'Wanting to enjoy and learn as much as possible', 'Web design'),
-(80, 'Karthik', 'Nothing', 'Data Analysis'),
-(81, 'Omkar', 'kdlkjlk jkjks', 'Big data'),
-(82, 'Akhila', 'hjh diu idiuioe', 'Data Analysis'),
-(83, 'Mallika', 'jk hsjd yhsuydy uhuhda', 'Big data'),
-(84, 'Imad', 'jsdj f jif fif', 'SQL');
+(4, 'Vilas', 'Nothing', 'Data Analysis'),
+(6, 'Tushar', 'ffdg t tet ttrywy trt yyu uiii77i', 'Competitive programming'),
+(8, 'Sujna', 'safef ry', 'Competitive programming'),
+(9, 'Hema', 'Nothing', 'Competitive programming'),
+(13, 'Sushmitha', 'f tretyty yuuuyuuiii qwjori  irewrp[ewr', 'Communication'),
+(14, 'Aesha', 'e tt y66 u5u757 7u7  trretr', 'Ethical hacking'),
+(15, 'Varsha', 'the faculty or state of being able to see.', 'Web design'),
+(16, 'Suahana', 'the faculty or state of being able to see.', 'Marketing'),
+(17, 'Romi', 'Nothing as of now', 'SQL');
 
 -- --------------------------------------------------------
 
@@ -257,7 +319,7 @@ INSERT INTO `visions` (`id`, `name`, `vision`, `skills`) VALUES
 --
 DROP TABLE IF EXISTS `total`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `total`  AS SELECT `s`.`fname` AS `fname`, `s`.`lname` AS `lname`, `s`.`email` AS `email`, `s`.`linkedin` AS `linkedin`, `s`.`position` AS `position`, `s`.`branch` AS `branch`, `s`.`relocate` AS `relocate`, `a`.`dob` AS `dob`, `b`.`lwc` AS `lwc`, `b`.`xp` AS `xp`, `b`.`skill` AS `skill`, `l`.`mobile` AS `mobile`, `v`.`vision` AS `vision` FROM ((((`submissions` `s` join `applicant` `a`) join `locate` `l`) join `background` `b`) join `visions` `v`) WHERE `s`.`fname` = `a`.`name` AND `s`.`fname` = `l`.`name` AND `s`.`fname` = `b`.`name` AND `s`.`fname` = `v`.`name` AND `s`.`id` = `a`.`id` = `l`.`id` = `b`.`id` = `v`.`id` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `total`  AS   (select `s`.`id` AS `id`,`s`.`fname` AS `fname`,`a`.`photo` AS `photo`,`s`.`lname` AS `lname`,`s`.`email` AS `email`,`s`.`linkedin` AS `linkedin`,`s`.`position` AS `position`,`s`.`branch` AS `branch`,`s`.`relocate` AS `relocate`,`a`.`dob` AS `dob`,`b`.`lwc` AS `lwc`,`b`.`xp` AS `xp`,`b`.`skill` AS `skill`,`l`.`mobile` AS `mobile`,`v`.`vision` AS `vision` from ((((`submissions` `s` join `applicant` `a`) join `locate` `l`) join `background` `b`) join `visions` `v`) where `s`.`id` = `a`.`app_id` and `s`.`id` = `l`.`id` and `s`.`id` = `v`.`id`)  ;
 
 --
 -- Indexes for dumped tables
@@ -267,8 +329,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- Indexes for table `applicant`
 --
 ALTER TABLE `applicant`
-  ADD PRIMARY KEY (`id`) USING BTREE,
-  ADD KEY `email` (`email`);
+  ADD PRIMARY KEY (`app_id`);
 
 --
 -- Indexes for table `background`
@@ -292,7 +353,7 @@ ALTER TABLE `recruit`
 -- Indexes for table `submissions`
 --
 ALTER TABLE `submissions`
-  ADD PRIMARY KEY (`id`,`email`);
+  ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
 -- Indexes for table `visions`
@@ -305,10 +366,16 @@ ALTER TABLE `visions`
 --
 
 --
+-- AUTO_INCREMENT for table `applicant`
+--
+ALTER TABLE `applicant`
+  MODIFY `app_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
 -- AUTO_INCREMENT for table `submissions`
 --
 ALTER TABLE `submissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Constraints for dumped tables
@@ -318,13 +385,13 @@ ALTER TABLE `submissions`
 -- Constraints for table `applicant`
 --
 ALTER TABLE `applicant`
-  ADD CONSTRAINT `applicant_ibfk_1` FOREIGN KEY (`id`) REFERENCES `submissions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `app_sub_id` FOREIGN KEY (`app_id`) REFERENCES `submissions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `background`
 --
 ALTER TABLE `background`
-  ADD CONSTRAINT `background_ibfk_1` FOREIGN KEY (`id`) REFERENCES `submissions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `background_ibfk_1` FOREIGN KEY (`id`) REFERENCES `applicant` (`app_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `locate`

@@ -1,8 +1,7 @@
 
 
 <?php
-$link = mysqli_connect("localhost", "root" , "") or die (mysqli_error($link));
-mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
+include 'connection.php';
 
 
 ?>
@@ -133,35 +132,25 @@ if(isset($_POST['submit']))
 //  join `jobapp1`.`background` `b`) join `jobapp1`.`visions` `v`) where `s`.`id` = `a`.`app_id` 
 //  and `s`.`id` = `l`.`id` and `s`.`id` = `v`.`id`)");
 
+  //   $res = mysqli_query($link, "SELECT  `s`.`id` AS `id`,`s`.`fname` AS `fname`,`a`.`photo` AS `photo`,`s`.`lname` AS `lname`,`s`.`email` AS `email`,
+  //      `s`.`linkedin` AS `linkedin`,`s`.`position` AS `position`,`s`.`branch` AS `branch`,`s`.`relocate` AS `relocate`,
+  //      `a`.`dob` AS `dob`,`b`.`lwc` AS `lwc`,`b`.`xp` AS `xp`,`b`.`skill` AS `skill`,`l`.`mobile` AS `mobile`,`v`.`vision` AS `vision` from `submissions` `s` ,`applicant` `a`,`locate` `l` ,
+  // `background` `b`,`visions` `v` where s.linkedin='$_POST[name]' or s.email='$_POST[name]' or a.mob='$_POST[name]' ;");
 
 
-    $res = mysqli_query($link, "SELECT  `s`.`id` AS `id`,`s`.`fname` AS `fname`,`a`.`photo` AS `photo`,`s`.`lname` AS `lname`,`s`.`email` AS `email`,
-       `s`.`linkedin` AS `linkedin`,`s`.`position` AS `position`,`s`.`branch` AS `branch`,`s`.`relocate` AS `relocate`,
-       `a`.`dob` AS `dob`,`b`.`lwc` AS `lwc`,`b`.`xp` AS `xp`,`b`.`skill` AS `skill`,`l`.`mobile` AS `mobile`,`v`.`vision` AS `vision` from `submissions` `s` ,`applicant` `a`,`locate` `l` ,
-  `background` `b`,`visions` `v` where s.linkedin='$_POST[name]' or s.email='$_POST[name]' or a.mob='$_POST[name]' ;");
+
+  
+$view=mysqli_query($link,"INSERT into total values(SELECT  `s`.`id` AS `id`,`s`.`fname` AS `fname`,`a`.`photo` AS `photo`,`s`.`lname` AS `lname`,`s`.`email` AS `email`,
+`s`.`linkedin` AS `linkedin`,`s`.`position` AS `position`,`s`.`branch` AS `branch`,`s`.`relocate` AS `relocate`,
+`a`.`dob` AS `dob`,`b`.`lwc` AS `lwc`,`b`.`xp` AS `xp`,`b`.`skill` AS `skill`,`l`.`mobile` AS `mobile`,`v`.`vision` AS `vision` from `submissions` `s` ,`applicant` `a`,`locate` `l` ,
+`background` `b`,`visions` `v` where s.id=v.id and s.id = app_id s.id=b.id)");
+
+
+  $res= mysqli_query($link,"SELECT * from total where  linkedin='$_POST[name]' or email='$_POST[name]' or mobile='$_POST[name]' ");
     $num=mysqli_num_rows($res);
     if($num>0){
       while($row=mysqli_fetch_array($res))
       {
-       
-          // echo "<tr>"; 
-          // echo "<td>";
-          // echo "<td>"; echo $row["fname"]; echo "</td>";
-          // echo "<td>"; echo $row["lname"]; echo "</td>";
-          // echo "<td>"; echo $row["email"]; echo "</td>";
-          // echo "<td>"; echo $row["linkedin"]; echo "</td>";
-          // echo "<td>"; echo $row["position"]; echo "</td>";
-          // echo "<td>"; echo $row["branch"]; echo "</td>";
-          // echo "<td>"; echo $row["mobile"]; echo "</td>";
-          // echo "<td>"; echo $row["dob"]; echo "</td>";
-          // echo "<td>"; echo $row["lwc"]; echo "</td>";
-          // echo "<td>"; echo $row["xp"]; echo "</td>";
-          // echo "<td>"; echo $row["skill"]; echo "</td>";
-          // echo "<td>"; echo $row["relocate"]; echo "</td>";
-          // echo "<td>"; echo $row["vision"]; echo "</td>"; 
-          // echo "</tr>";      
-          // echo "<td>"; 
-          // echo "</tr>";   
           $photo=$row["photo"];
           $fname= $row["fname"];
           $lastname= $row["lname"]; 
@@ -178,10 +167,11 @@ if(isset($_POST['submit']))
          $vision= $row["vision"];  
          $id=$row['id'];
       }
+    
      
       ?>
       <div class="details">
-      <img src="images/<?php echo $photo; ?>" alt="<?php echo $photo;  ?>" /> 
+      <img src="<?php echo $photo; ?>" alt="<?php echo $photo;  ?>" /> 
       <br><br>
       <div class="col-md-5 mb-3">
       <div class="input-group">
@@ -289,7 +279,7 @@ if(isset($_POST['submit']))
       
       <div class="col-md-4 mb-3">
             <div class="input-group">
-            <a style="width: 100%;"  href="viewsome.php?id=<?php echo $id; ?>"><button style="width: 100%;"  type="text/javascript" class="btn btn-outline-success" >Edit</button></a> 
+            <a style="width: 100%;"  href="appedit.php?id=<?php echo $id; ?>"><button style="width: 100%;"  type="text/javascript" class="btn btn-outline-success" >Edit</button></a> 
             </div>
           </div>
       

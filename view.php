@@ -1,22 +1,7 @@
 
 <?php
-session_start();
+include 'connection.php';
 
-
-if($_SESSION['status']=='Successful'){
-  // echo "<script>alert('Logged in!')</script>";
-  echo "";
-}
-else{
-  header("Location: index.html");
-}
-
-
-$link = mysqli_connect("localhost", "root" , "") or die (mysqli_error($link));
-mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
-
-date_default_timezone_set('Asia/Kolkata'); 
-$curr_date= date("Y-m-d H:i:s"); // time in India
 ?>
 
 
@@ -170,17 +155,11 @@ $(document).ready(function(){
 </style>
 
 <?php
-  $link = mysqli_connect("localhost", "root" , "") or die (mysqli_error($link));
-  mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
+
 
 if(isset($_POST['search']))
 {
   $count=0;
-  
-  $link = mysqli_connect("localhost", "root" , "") or die (mysqli_error($link));
-mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
-
-
     $res = mysqli_query($link, "SELECT * from submissions WHERE fname= '$_POST[value]' ");
     $las = mysqli_query($link, "SELECT * from submissions WHERE lname= '$_POST[value]' ");
     $pos = mysqli_query($link, "SELECT * from submissions WHERE position like '%$_POST[value]%' ");
@@ -323,9 +302,6 @@ mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
 
 if(isset($_POST['dsort'])){
   $count=0;
-  $link = mysqli_connect("localhost", "root" , "") or die (mysqli_error($link));
-mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
-
   $date = mysqli_query($link, "SELECT * from submissions WHERE `date` BETWEEN  '$_POST[from]' AND '$_POST[to]' group by(date) ");
 
   echo "<center>";
@@ -373,8 +349,7 @@ echo "</h2>";
 
 if(isset($_POST['ot'])){
   $count=0;
-  $link = mysqli_connect("localhost", "root" , "") or die (mysqli_error($link));
-mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
+
 
   $oth = mysqli_query($link, "SELECT * from submissions WHERE position not like 'developer' 
   and position not like 'tester' and position not like 'hr' ");
@@ -419,10 +394,8 @@ echo "</h2>";
 if(isset($_POST['job']))
 {
   $count=0;
-  $link = mysqli_connect("localhost", "root" , "") or die (mysqli_error($link));
-mysqli_select_db($link, "jobapp1") or die(mysqli_error($link));
 
-    $pos = mysqli_query($link, "SELECT * from submissions WHERE position = '$_POST[job]' ");
+    $pos = mysqli_query($link, "SELECT * from submissions WHERE position like '%$_POST[job]%' ");
     $dev= mysqli_query($link,"SELECT COUNT(*) FROM submissions WHERE position='developer' ");
     $test= mysqli_query($link,"SELECT COUNT(*) FROM submissions WHERE position='tester' ");
     $hr= mysqli_query($link,"SELECT COUNT(*) FROM submissions WHERE position='hr' ");
@@ -797,6 +770,13 @@ echo $row["skill"];  ?>]
     align-items: center;
     width: 100%;
   }
+  .logout{
+    display: inline-block;
+    position:  fixed ;
+    bottom: 2%;
+    left:1%;
+    z-index: 100;
+  }
 </style>
  
 
@@ -805,9 +785,6 @@ echo $row["skill"];  ?>]
 <div  class="center">
         <p style="text-align: center;color: rgba(0, 0, 0, 0.493);bottom: 5%;">&copy; <script>document.write(new Date().getFullYear())</script> Vilas Hegde All Rights Reserved</p>
 </div>
-
-
-
 
 
 

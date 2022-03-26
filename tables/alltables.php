@@ -1,7 +1,5 @@
 <?php
-$link=new mysqli("localhost","root","","jobapp1");
-
-
+include '../connection.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,28 +21,76 @@ $link=new mysqli("localhost","root","","jobapp1");
 <h2>All details:</h2>
 <a href="#er">ER Model</a><br>
 <a href="#schema">Schema</a><br>
-<table class="table table-striped table-hover  table-responsive">
-    <thead>
-      <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
-        <th>Linkedin</th>
-        <th>Position</th>
-        <th>Branch Name</th>
-        <th>Mobile</th>
-        <th>Birth Date</th>
-        <th>Last Company</th>
-        <th>Experience</th>
-        <th>Skills</th>
-        <th>Relocate</th>
-        <th>Visions</th>
-      </tr>
-    </thead>
-    <tbody>
+<form action="" method="post">
+  <input class="todays" type="submit" name="todays" value="Get Today's"></input>
+</form>
+
+
+
+
 <?php
-$count=0;
-    $res = mysqli_query($link, "SELECT * from total");
+
+
+if(isset($_POST['todays'])){
+  $sql = "CALL `get_today_submissions`(@p0);";
+  $sql1 = mysqli_query($link,$sql);
+
+  echo "<center>";
+  echo "<table class='table table-striped table-hover  table-responsive'>
+
+  <tr>
+  <th>#</th>
+  <th>Name</th>
+  <th>Surname</th>
+  <th>Email</th>
+  <th>Linkedin</th>
+  <th>Position</th>
+  <th>Branch</th>
+  <th>Relocate</th>
+  <th>Date</th>
+  </tr>";
+  echo "</center>";
+
+  while($row=mysqli_fetch_array($sql1)){
+    echo "<tr>";
+    echo "<td>"; echo $row["id"]; echo "</td>";
+    echo "<td>"; echo $row["fname"]; echo "</td>";
+    echo "<td>"; echo $row["lname"]; echo "</td>";
+    echo "<td>"; echo $row["email"]; echo "</td>";
+    echo "<td>"; echo $row["linkedin"]; echo "</td>";
+    echo "<td>"; echo $row["position"]; echo "</td>";
+    echo "<td>"; echo $row["branch"]; echo "</td>";
+    echo "<td>"; echo $row["relocate"]; echo "</td>";
+    echo "<td>"; echo $row["date"]; echo "</td>";
+    echo "</tr>";
+  }
+  echo "</table>";
+
+}
+else{
+  $count=0;
+  $res = mysqli_query($link, "select * from total");
+
+  echo "<table class='table table-dark'>
+  <thead>
+  <tr>
+    <th>#</th>
+    <th>Firstname</th>
+    <th>Lastname</th>
+    <th>Email</th>
+    <th>Linkedin</th>
+    <th>Position</th>
+    <th>Branch Name</th>
+    <th>Mobile</th>
+    <th>Birth Date</th>
+    <th>Last Company</th>
+    <th>Experience</th>
+    <th>Skills</th>
+    <th>Relocate</th>
+    <th>Visions</th>
+  </tr>";
+echo "</thead>";
+
     while($row=mysqli_fetch_array($res))
     {
 
@@ -68,10 +114,18 @@ $count=0;
         $count+=1;
      
     }
+  
+ 
 echo "Total:". $count . " tuples";
+}
+
+
 ?>
 
-    </tbody>
+
+<table class="table table-striped table-hover  table-responsive">
+
+   
   </table>
   
 <div class="er" id="er">
@@ -100,6 +154,16 @@ echo "Total:". $count . " tuples";
     width: fit-content;
     max-width: 100%;
   }
+  .todays{
+    display: inline;
+    text-align: center;
+    width: 100%;
+    background: #000;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+  }
 </style>
+
 </body>
 </html>

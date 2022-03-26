@@ -1,4 +1,6 @@
-
+<?php
+include '../connection.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,9 +15,6 @@
 <body>
     <h2 style="text-align: center;text-shadow:0 4px 5px rgba(0,0,0,0.4);">Applicant table Details:</h2>
 <?php
-
-$link= new mysqli("localhost","root",'',"jobapp1");
-
 $qapp= mysqli_query($link, "SELECT * from applicant ");
 
 $appcount=0;

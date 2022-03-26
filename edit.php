@@ -1,5 +1,5 @@
 <?php
-$link = new mysqli("localhost","root",'',"jobapp1");
+include 'connection.php';
 date_default_timezone_set('Asia/Kolkata'); 
 $curr_date= date("Y-m-d H:i:s"); // time in India
 

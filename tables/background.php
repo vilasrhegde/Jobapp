@@ -1,5 +1,5 @@
 <?php
-$link=new mysqli("localhost","root","","jobapp1");
+include '../connection.php';
 
 $tot= mysqli_query($link, "SELECT count(*) as count from background ");
 

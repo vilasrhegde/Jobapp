@@ -1,6 +1,5 @@
 <?php
-$link=new mysqli("localhost","root","","jobapp1");
-
+include '../connection.php';
 $qvision= mysqli_query($link, "SELECT * from visions ");
 
 $vscount=0;
